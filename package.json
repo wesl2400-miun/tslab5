@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "page": "ng generate component /ui/page/%npm_config_name%",
+    "comp": "ng generate component /ui/component/%npm_config_name%",
+    "serv": "ng generate service /logic/service/%npm_config_name%"
   },
   "private": true,
   "packageManager": "npm@11.9.0",

@@ -1,0 +1,51 @@
+# Bygger projektet med hjälp av Vite och publicerar det till GithubPages.
+name: Deploy static content to Pages
+
+on:
+  push:
+  # Bygg projektet från denna gren.
+    branches: ['master'] 
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      - name: Install dependencies
+      # Installerar beroenden från package-lock.json
+        run: npm ci
+      - name: Build
+      # Detta är fungerande Angular publiceringsinställning
+        run: npm run build -- --base-href=https://wesl2400-miun.github.io/tslab5/
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+      # Den färdiga appen uppladdas från './dist/tslab5/browser'-mappen. 
+      # I dist-mappen hamnar den optimerade och produktionsfärdiga 
+      # versionen av appen som skapas av Vite.
+        with:
+          path: './dist/tslab5/browser'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

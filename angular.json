@@ -21,7 +21,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/app/ui/asset/",
+                "output": "asset/"
               }
             ],
             "styles": [
