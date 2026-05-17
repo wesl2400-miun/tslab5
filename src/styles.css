@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+/* Stillmallen gäller hela appen */
+
+:root {
+  --primary: #3751A0;
+  --primary-variant: #283976;
+  --secondary: #fff9ac;
+  --secondary-variant: #C2D0FF;
+  --on-surface: #292929;
+  --on-background: #595959;
+  --surface: #e0e0e0;
+  --on-primary: white;
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  color: var(--on-surface);
+}
