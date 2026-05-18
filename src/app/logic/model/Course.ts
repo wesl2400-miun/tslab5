@@ -11,7 +11,8 @@ export class Course implements CourseI {
     public points: number,
     public institutionCode: string,
     public subject: string,
-    public syllabus: string) {
+    public syllabus: string,
+    public added: boolean) {
       this.courseCode = courseCode;
       this.subjectCode = subjectCode;
       this.level = level;
@@ -21,5 +22,6 @@ export class Course implements CourseI {
       this.institutionCode = institutionCode;
       this.subject = subject;
       this.syllabus = syllabus;
+      this.added = added;
     }
 }

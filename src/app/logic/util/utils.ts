@@ -1,10 +1,4 @@
 
-// Skriver ut felmeddelanden
-export const onError = 
-  (err: any): void => {
-  console.error(err.message);
-}
-
 export const save = (
   key: string, 
   data: any): void => {
@@ -20,4 +14,16 @@ export const load = (
     .getItem(key);
   if(!json) return null;
   return JSON.parse(json);
+}
+
+// Kollar om en text innehåller ett angivet sökord
+export const foundPhrase = (
+  phrase: string, 
+  search: string): boolean => {
+  const text = phrase
+    .toLowerCase();
+  const keyword = search.
+    toLowerCase();
+  return text
+    .includes(keyword);
 }

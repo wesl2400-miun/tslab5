@@ -8,5 +8,6 @@ export interface CourseI {
   points: number,
   institutionCode: string,
   subject: string,
-  syllabus: string
+  syllabus: string,
+  added: boolean,
 }

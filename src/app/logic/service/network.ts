@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { onError } from '../util/utils';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +12,8 @@ export class Network {
     this.http = http;
   }
 
-  public fetch = (
-    sbj: BehaviorSubject<any>,
-    url: string,
-    ): Subscription => {
-    return this.http
-      .get(url).subscribe({ 
-        next: (data): void => 
-          sbj.next(data),
-        error: onError
-      });
+  public fetch = (url: string
+    ): Observable<any> => {
+    return this.http.get(url);
   }
 }

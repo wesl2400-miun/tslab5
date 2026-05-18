@@ -10,10 +10,10 @@ import { STORAGE } from '../ref/storage';
   providedIn: 'root',
 })
 export class Outline {
+  private error: Error;
   private pickSbj: BehaviorSubject<CourseI[]>;
   public picked$: Observable<CourseI[]>;
-  private error: Error;
-
+  
   constructor(error: Error) {
     this.pickSbj = 
       new BehaviorSubject<CourseI[]>([]);
@@ -27,7 +27,7 @@ export class Outline {
     newCour: CourseI): void => {
     const courses = 
       this.pickSbj.getValue();
-    const duplicate = 
+    const duplicate: boolean = 
       this.isDuplicate(
         courses, newCour);
     if(duplicate) {
@@ -35,9 +35,25 @@ export class Outline {
         ERR_MSG.DUPLICATE);
       return;
     } else {
-      this.trySave(
-        courses, newCour);
+      const copy = 
+        [...courses, newCour];
+      this.trySave(copy);
     }
+  }
+
+  public remove = (
+    remCourse: CourseI): void => {
+    const courses =
+      this.pickSbj.getValue();
+    const copy = courses
+      .filter(course => {
+        const a = course
+          .courseCode;
+        const b = remCourse
+          .courseCode;
+        return a !== b;
+      });
+    this.trySave(copy);
   }
 
   private isDuplicate = (
@@ -55,11 +71,8 @@ export class Outline {
   }
 
   private trySave = (
-    courses: CourseI[], 
-    newCour: CourseI): void => {
+    copy: CourseI[]): void => {
     try {
-      const copy = 
-        [...courses, newCour];
       save(STORAGE.OUTLINE, copy);
       this.pickSbj.next(copy);
     } catch(err: any) {
