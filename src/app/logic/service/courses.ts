@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Error } from './error';
 import { CourseI } from '../interface/CourseI';
 import { Network } from './network';
@@ -13,13 +13,16 @@ import { ERR_MSG } from '../ref/errMsg';
 export class Courses {
   private error: Error;
   private cacheSbj: BehaviorSubject<CourseI[]>;
-  public cache$: Observable<CourseI[]>;
+  private totalSbj: BehaviorSubject<number>;
+  public total$: Observable<number>;
 
   constructor(error: Error) {
     this.error = error;
     this.cacheSbj = 
       new BehaviorSubject<CourseI[]>([]);
-    this.cache$ = this.cacheSbj
+    this.totalSbj =
+      new BehaviorSubject<number>(0);
+    this.total$ = this.totalSbj
       .asObservable();
   }
 
@@ -38,7 +41,19 @@ export class Courses {
 
   private cache = (
     courses: CourseI[]): void => {
+    console.log(courses);
     this.cacheSbj
       .next(courses);
+    this.totalSbj.next(
+      courses.length);
+  }
+
+  public chunk$ = (
+    end: number): Observable<CourseI[]> => {
+    return this.cacheSbj
+      .asObservable()
+      .pipe(map((courses) => {
+      return courses.slice(0, end);
+    }));
   }
 }

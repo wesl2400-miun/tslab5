@@ -1,0 +1,22 @@
+<section>
+  <h2>{{itemLen$ | async}} av {{total$ | async}}</h2>
+  <ul>
+    @for(course of courses$ | async; track course.courseCode) {
+      <li>
+        <h3>{{course.courseName}}</h3>
+        <p>Kurskod: {{course.courseCode}}</p>
+        <p>Poäng: {{course.points}}</p>
+        <p>Ämne: {{course.subject}}</p>
+        <a target="_blank" [href]="course.syllabus">Kursplan</a>
+        <button (click)="changeDesc(course)">{{showBtnLab(course)}}</button>
+        @if(course.showMore) {
+          <p>Nivå: {{course.level}}</p>
+          <p>Progression: {{course.progression}}</p>
+          <p>Organisationskod: {{course.institutionCode}}</p>
+        }
+        <button (click)="addCourse(course)">Lägg till</button>
+      </li>
+    }
+  </ul>
+  <button id="next" (click)="nextPage('next')">Ladd mer</button>
+</section>

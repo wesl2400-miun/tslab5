@@ -12,16 +12,19 @@ export class Course implements CourseI {
     public institutionCode: string,
     public subject: string,
     public syllabus: string,
-    public added: boolean) {
-      this.courseCode = courseCode;
-      this.subjectCode = subjectCode;
-      this.level = level;
-      this.progression = progression;
-      this.courseName = courseName;
-      this.points = points;
-      this.institutionCode = institutionCode;
-      this.subject = subject;
-      this.syllabus = syllabus;
-      this.added = added;
-    }
+    public added: boolean,
+    public showMore: boolean,
+  ) {
+    this.courseCode = courseCode;
+    this.subjectCode = subjectCode;
+    this.level = level;
+    this.progression = progression;
+    this.courseName = courseName;
+    this.points = points;
+    this.institutionCode = institutionCode;
+    this.subject = subject;
+    this.syllabus = syllabus;
+    this.added = added;
+    this.showMore = false;
+  }
 }

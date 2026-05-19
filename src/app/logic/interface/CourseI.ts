@@ -10,4 +10,5 @@ export interface CourseI {
   subject: string,
   syllabus: string,
   added: boolean,
+  showMore: boolean
 }

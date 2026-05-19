@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { Network } from './logic/service/network';
 import { Subscription } from 'rxjs';
 import { Courses } from './logic/service/courses';
+import { CList } from './ui/component/clist/clist';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
