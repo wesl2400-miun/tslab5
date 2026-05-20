@@ -1,4 +1,10 @@
 
+export const node = (
+  nodeId: string): HTMLElement => {
+  return document
+    .getElementById(nodeId)!;
+}
+
 export const save = (
   key: string, 
   data: any): void => {

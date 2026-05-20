@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Courses } from '../../../logic/service/courses';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CourseI } from '../../../logic/interface/CourseI';
 import { Outline } from '../../../logic/service/outline';
+import { node } from '../../../logic/util/utils';
 
 @Component({
   selector: 'app-clist',
@@ -14,22 +15,23 @@ import { Outline } from '../../../logic/service/outline';
 export class CList {
   public courses$: Observable<CourseI[]>;
   private outline: Outline;
-  private iLenSbj: BehaviorSubject<number>;
-  public itemLen$: Observable<number>;
+  public chunkLen$: Observable<number>;
   public total$: Observable<number>;
+  private courses: Courses;
+  public load: boolean;
 
   constructor(
     courses: Courses,
     outline: Outline) {
-    this.iLenSbj = 
-      new BehaviorSubject(5);
-    this.itemLen$ = this.iLenSbj
-      .asObservable();
-    this.courses$ = this.itemLen$
-      .pipe(switchMap(itemLen => 
-        courses.chunk$(itemLen)));
-    this.total$ = courses.total$;
+    this.courses = courses;
+    this.courses$ = 
+      courses.current$;
     this.outline = outline;
+    this.chunkLen$ = 
+      courses.chunkLen$;
+    this.total$ = 
+      courses.total$;
+    this.load = true;
   }
 
   public addCourse = 
@@ -50,15 +52,11 @@ export class CList {
       : 'Visa mer';
   }
 
-  public nextPage = 
+  public loadMore = 
     (viewId: string) => {
-    const len = 
-      this.iLenSbj
-        .getValue();
-    this.iLenSbj
-      .next(len + 5);
-    const view = document
-      .getElementById(viewId);
-    view?.scrollIntoView();
+    this.load = this.courses
+      .nextChunk();
+    node(viewId)
+      .scrollIntoView();
   }
 }

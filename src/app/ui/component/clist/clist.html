@@ -1,7 +1,7 @@
 <section>
-  <h2>{{itemLen$ | async}} av {{total$ | async}}</h2>
+  <h2>{{chunkLen$ | async}} av {{total$ | async}}</h2>
   <ul>
-    @for(course of courses$ | async; track course.courseCode) {
+    @for(course of courses$ | async; track $index) {
       <li>
         <h3>{{course.courseName}}</h3>
         <p>Kurskod: {{course.courseCode}}</p>
@@ -18,5 +18,7 @@
       </li>
     }
   </ul>
-  <button id="next" (click)="nextPage('next')">Ladd mer</button>
+  @if(load) {
+    <button id="load-more-btn" (click)="loadMore('load-more-btn')">Visa fler kurser</button>
+  }
 </section>

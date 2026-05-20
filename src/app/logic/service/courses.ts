@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
 import { Error } from './error';
 import { CourseI } from '../interface/CourseI';
 import { Network } from './network';
 import { URL } from '../ref/url';
 import { Subscription } from 'rxjs';
 import { ERR_MSG } from '../ref/errMsg';
+import { CONSTANT } from '../ref/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,11 @@ import { ERR_MSG } from '../ref/errMsg';
 export class Courses {
   private error: Error;
   private cacheSbj: BehaviorSubject<CourseI[]>;
+  public current$: Observable<CourseI[]>;
   private totalSbj: BehaviorSubject<number>;
   public total$: Observable<number>;
+  private chunkLenSbj: BehaviorSubject<number>;
+  public chunkLen$: Observable<number>;
 
   constructor(error: Error) {
     this.error = error;
@@ -24,6 +28,12 @@ export class Courses {
       new BehaviorSubject<number>(0);
     this.total$ = this.totalSbj
       .asObservable();
+    this.chunkLenSbj = 
+      new BehaviorSubject(
+        CONSTANT.CHUNK_LEN);
+    this.chunkLen$ = this.chunkLenSbj
+      .asObservable();
+    this.current$ = this.chunk$();
   }
 
   public fetch = (network: Network
@@ -48,12 +58,42 @@ export class Courses {
       courses.length);
   }
 
-  public chunk$ = (
-    end: number): Observable<CourseI[]> => {
-    return this.cacheSbj
-      .asObservable()
-      .pipe(map((courses) => {
-      return courses.slice(0, end);
+  public nextChunk = (): boolean => {
+    const len = this.chunkLenSbj
+      .getValue();
+    const total = this.totalSbj
+      .getValue();
+    let load = false;
+    if(len < total) {
+      let chunk = len + 
+        CONSTANT.CHUNK_LEN;
+      load = true;
+      if(chunk > total) {
+        load = false;
+        chunk = total;
+      }
+      this.chunkLenSbj
+        .next(chunk);
+    } 
+    return load;
+  }
+
+  private chunk$ = (
+    ): Observable<CourseI[]> => {
+    return this.chunkLen$
+      .pipe(switchMap(len => {
+      return this.cacheSbj
+        .asObservable()
+        .pipe(map(courses => {
+          return courses
+            .slice(0, len);
+        }));
     }));
+  }
+
+  public onRoute = 
+    (): void => {
+    this.chunkLenSbj.next(
+      CONSTANT.CHUNK_LEN);
   }
 }
