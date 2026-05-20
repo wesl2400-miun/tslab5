@@ -7,6 +7,7 @@ import { URL } from '../ref/url';
 import { Subscription } from 'rxjs';
 import { ERR_MSG } from '../ref/errMsg';
 import { CONSTANT } from '../ref/constant';
+import { Sorter } from './feature/sorter';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ import { CONSTANT } from '../ref/constant';
 export class Courses {
   private error: Error;
   private cacheSbj: BehaviorSubject<CourseI[]>;
-  public current$: Observable<CourseI[]>;
+  private cache$: Observable<CourseI[]>;
   private totalSbj: BehaviorSubject<number>;
   public total$: Observable<number>;
   private chunkLenSbj: BehaviorSubject<number>;
@@ -24,6 +25,8 @@ export class Courses {
     this.error = error;
     this.cacheSbj = 
       new BehaviorSubject<CourseI[]>([]);
+    this.cache$ = this.cacheSbj
+      .asObservable();
     this.totalSbj =
       new BehaviorSubject<number>(0);
     this.total$ = this.totalSbj
@@ -33,10 +36,10 @@ export class Courses {
         CONSTANT.CHUNK_LEN);
     this.chunkLen$ = this.chunkLenSbj
       .asObservable();
-    this.current$ = this.chunk$();
   }
 
-  public fetch = (network: Network
+  public fetch = (
+    network: Network
     ): Subscription => {
     return network
       .fetch(URL.COURSES)
@@ -85,7 +88,7 @@ export class Courses {
     let load = false;
     if(len < total) {
       let chunk = len + 
-        1000;
+        CONSTANT.CHUNK_LEN;
       load = true;
       if(chunk > total) {
         load = false;
@@ -97,14 +100,20 @@ export class Courses {
     return load;
   }
 
-  private chunk$ = (
+  public chunk$ = (
+    sorter: Sorter,
+    sortMode$: Observable<string>
     ): Observable<CourseI[]> => {
     return this.chunkLen$
       .pipe(switchMap(len => {
-      return this.cacheSbj
-        .asObservable()
-        .pipe(map(courses => {
-          return courses
+      return combineLatest(
+        [this.cache$, sortMode$])
+        .pipe(map(([
+          courses, sortMode]) => {
+          const sorted = sorter
+            .sorted(sortMode, 
+              courses);
+          return sorted
             .slice(0, len);
         }));
     }));

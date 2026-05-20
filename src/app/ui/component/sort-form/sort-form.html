@@ -1,1 +1,27 @@
-<p>sort-form works!</p>
+<section class="form">
+  <h2>Sortera efter</h2>
+  <!-- ReactiveFormsModule skapar ett formulär, som styrs från sorter-form.ts-filen -->
+  <!-- Rubrikerna och värdena anges via 'databindning' -->
+  <form class="sorter" [formGroup]="form">
+    <div class="radio-btn">
+      <input id="code" type="radio"  formControlName="sorter" [value]="sortMode.CODE">
+      <label for="code">{{label.COURSE_CODE}}</label>
+    </div>
+    <div class="radio-btn">
+      <input id="name" type="radio" formControlName="sorter" [value]="sortMode.NAME">
+      <label for="name">{{label.COURSE_NAME}}</label>
+    </div>
+    <div class="radio-btn">
+      <input id="prog" type="radio" formControlName="sorter" [value]="sortMode.PROG">
+      <label for="prog">{{label.COURSE_PROG}}</label>
+    </div>
+    <div class="radio-btn">
+      <input id="points" type="radio" formControlName="sorter" [value]="sortMode.POINTS">
+      <label for="points">{{label.COURSE_POINTS}}</label>
+    </div>
+    <div class="radio-btn">
+      <input id="subject" type="radio" formControlName="sorter" [value]="sortMode.SUBJECT">
+      <label for="subject">{{label.COURSE_SUBJECT}}</label>
+    </div>
+  </form>
+</section>

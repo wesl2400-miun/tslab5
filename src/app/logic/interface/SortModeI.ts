@@ -1,10 +1,9 @@
 
 // Definierar strukturen för sorteringsdata
-export interface SortFlagI {
+export interface SortModeI {
   CODE: string,
   NAME: string,
   PROG: string,
   SUBJECT: string,
-  POINTS: string,
-  ORG: string
+  POINTS: string
 }
