@@ -51,11 +51,30 @@ export class Courses {
 
   private cache = (
     courses: CourseI[]): void => {
-    console.log(courses);
-    this.cacheSbj
-      .next(courses);
+    const unique = 
+      this.remDups(courses);
+    this.cacheSbj.next(unique);
     this.totalSbj.next(
-      courses.length);
+      unique.length);
+  }
+
+  private remDups = (
+    courses: CourseI[]): CourseI[] => {
+    const ids: 
+      Set<string> = new Set();
+    const unique: 
+      CourseI[] = [];
+    const len = courses.length;
+    for(let i = 0; i < len; i++) {
+      const course = courses[i];
+      const code = 
+        course.courseCode;
+      if(!ids.has(code)) {
+        ids.add(code);
+        unique.push(course);
+      } 
+    }
+    return unique;
   }
 
   public nextChunk = (): boolean => {
@@ -66,7 +85,7 @@ export class Courses {
     let load = false;
     if(len < total) {
       let chunk = len + 
-        CONSTANT.CHUNK_LEN;
+        1000;
       load = true;
       if(chunk > total) {
         load = false;

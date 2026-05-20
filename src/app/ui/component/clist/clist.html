@@ -1,7 +1,7 @@
 <section>
   <h2>{{chunkLen$ | async}} av {{total$ | async}}</h2>
   <ul>
-    @for(course of courses$ | async; track $index) {
+    @for(course of courses$ | async; track course.courseCode) {
       <li>
         <h3>{{course.courseName}}</h3>
         <p>Kurskod: {{course.courseCode}}</p>

@@ -35,6 +35,7 @@ export class Outline {
         ERR_MSG.DUPLICATE);
       return;
     } else {
+      newCour.added = true;
       const copy = 
         [...courses, newCour];
       this.trySave(copy);
@@ -54,6 +55,7 @@ export class Outline {
         return a !== b;
       });
     this.trySave(copy);
+    remCourse.added = false;
   }
 
   private isDuplicate = (
