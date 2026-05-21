@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ERR_MSG } from '../ref/errMsg';
 import { CONSTANT } from '../ref/constant';
 import { Sorter } from './feature/sorter';
+import { Filter } from './feature/filter';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,8 @@ export class Courses {
   public total$: Observable<number>;
   private chunkLenSbj: BehaviorSubject<number>;
   public chunkLen$: Observable<number>;
+  private topSbj: BehaviorSubject<string[]>;
+  public topics$: Observable<string[]>;
 
   constructor(error: Error) {
     this.error = error;
@@ -35,6 +38,10 @@ export class Courses {
       new BehaviorSubject(
         CONSTANT.CHUNK_LEN);
     this.chunkLen$ = this.chunkLenSbj
+      .asObservable();
+    this.topSbj = 
+      new BehaviorSubject<string[]>([]);
+    this.topics$ = this.topSbj
       .asObservable();
   }
 
@@ -68,15 +75,24 @@ export class Courses {
     const unique: 
       CourseI[] = [];
     const len = courses.length;
+    const topics: 
+      Set<string> = new Set();
     for(let i = 0; i < len; i++) {
       const course = courses[i];
       const code = 
         course.courseCode;
+      const name =
+        course.courseName;
+      topics.add(
+        course.subject);
       if(!ids.has(code)) {
         ids.add(code);
-        unique.push(course);
+        if(name !== 'Okänt namn')
+          unique.push(course);
       } 
     }
+    this.topSbj.next(
+      Array.from(topics));
     return unique;
   }
 
@@ -101,18 +117,25 @@ export class Courses {
   }
 
   public chunk$ = (
+    filter: Filter,
     sorter: Sorter,
-    sortMode$: Observable<string>
     ): Observable<CourseI[]> => {
     return this.chunkLen$
       .pipe(switchMap(len => {
-      return combineLatest(
-        [this.cache$, sortMode$])
+      return combineLatest([
+          this.cache$, 
+          filter.phrase$,
+          sorter.sortMode$
+        ])
         .pipe(map(([
-          courses, sortMode]) => {
+          courses, phrase, 
+          sortMode]) => {
+          const filtered = 
+            filter.filtered(
+              phrase, courses);
           const sorted = sorter
             .sorted(sortMode, 
-              courses);
+              filtered); 
           return sorted
             .slice(0, len);
         }));

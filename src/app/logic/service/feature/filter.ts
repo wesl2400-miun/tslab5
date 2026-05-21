@@ -1,73 +1,57 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CourseI } from '../../interface/CourseI';
-import { foundPhrase } from '../../util/utils';
+import { hasPhrase } from '../../util/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Filter {
-  private searchSbj: BehaviorSubject<string>;
-  public search$: Observable<string>;
-  private topicSbj: BehaviorSubject<string>;
-  public topic$: Observable<string>;
+  private phraseSbj: BehaviorSubject<string>;
+  public phrase$: Observable<string>;
 
   // Definiera Rx-flödet för sökord som användaren ska mata in
   constructor() {
-    this.searchSbj =
+    this.phraseSbj =
       new BehaviorSubject('');
-    this.search$ = this.searchSbj
+    this.phrase$ = this.phraseSbj
       .asObservable();
-    this.topicSbj =
-      new BehaviorSubject('');
-    this.topic$ = this.topicSbj
-      .asObservable();
+  }
+
+  public reset = (): void => {
+    this.phraseSbj.next('');
   }
 
   // Uppdatera sökordet
-  public updSearch = (
-    search: string): void => {
-    this.searchSbj.next(search);
-  }
-
-  // Uppatera ämnet
-  public updTopic = (
-    topic: string): void => {
-    this.updTopic(topic);
+  public update = (
+    phrase: string): void => {
+    this.phraseSbj
+      .next(phrase);
   }
 
   // Returnera alla kurser som matchar det angivna sökordet
-  public found = (
-    search: string,
+  public filtered = (
+    phrase: string,
     courses: CourseI[]): CourseI[] => {
     const copy = [...courses];
     return copy.filter(
       course => this.isFound(
-        search, course));
-  }
-
-  // Returnera bara kuser som matchar det angivna ämnet
-  public byTopic = (
-    topic: string,
-    courses: CourseI[]): CourseI[] => {
-    const copy = [...courses];
-    return copy.filter(course => {
-      const sbj = course.subject;
-      return sbj === topic;
-    });
+        phrase, course));
   }
 
   // Returnera falskt eller sant om kursens kod eller namn
   // innehåller det angivna sökordet
   private isFound = (
-    search: string,
+    phrase: string,
     course: CourseI): boolean => {
     const { courseCode, 
-      courseName } = course;
-    return foundPhrase(
-      courseCode, search) 
-      || foundPhrase(
-        courseName, 
-        search);
+      courseName, 
+      subject } = course;
+    const found = hasPhrase(
+      courseCode, phrase) 
+      || hasPhrase(
+        courseName, phrase)
+      || subject === phrase;
+    return found;
   }
 }

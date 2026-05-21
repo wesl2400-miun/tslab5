@@ -1,3 +1,4 @@
+<app-filter-form></app-filter-form>
 <app-sort-form></app-sort-form>
 <section>
   <h2>{{chunkLen$ | async}} av {{total$ | async}}</h2>
@@ -6,14 +7,14 @@
       <li>
         <h3>{{course.courseName}}</h3>
         <p>Kurskod: {{course.courseCode}}</p>
+        <p>Progression: {{course.progression}}</p>
         <p>Poäng: {{course.points}}</p>
         <p>Ämne: {{course.subject}}</p>
-        <a target="_blank" [href]="course.syllabus">Kursplan</a>
         <button (click)="changeDesc(course)">{{showBtnLab(course)}}</button>
         @if(course.showMore) {
           <p>Nivå: {{course.level}}</p>
-          <p>Progression: {{course.progression}}</p>
           <p>Organisationskod: {{course.institutionCode}}</p>
+          <a target="_blank" [href]="course.syllabus">Kursplan</a>
         }
         <button (click)="addCourse(course)">Lägg till</button>
       </li>

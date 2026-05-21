@@ -23,7 +23,7 @@ export const load = (
 }
 
 // Kollar om en text innehåller ett angivet sökord
-export const foundPhrase = (
+export const hasPhrase = (
   phrase: string, 
   search: string): boolean => {
   const text = phrase
@@ -32,4 +32,12 @@ export const foundPhrase = (
     toLowerCase();
   return text
     .includes(keyword);
+}
+
+export const loop = (process: 
+  (index: number) => void, 
+  stop: number): void => {
+  for(let i = 0; i < stop; i++) {
+    process(i);
+  }
 }

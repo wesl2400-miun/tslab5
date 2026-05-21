@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
 import { Courses } from '../../../logic/service/courses';
 import { CommonModule } from '@angular/common';
-import { combineLatest, Observable, map } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { CourseI } from '../../../logic/interface/CourseI';
 import { Outline } from '../../../logic/service/outline';
 import { node } from '../../../logic/util/utils';
 import { SortForm } from '../../component/sort-form/sort-form';
 import { Sorter } from '../../../logic/service/feature/sorter';
+import { FilterForm } from '../../component/filter-form/filter-form';
+import { Filter } from '../../../logic/service/feature/filter';
 
 @Component({
   selector: 'app-clist',
-  imports: [CommonModule, SortForm],
+  imports: [CommonModule, SortForm, FilterForm],
   templateUrl: './clist.html',
   styleUrl: './clist.css',
 })
@@ -25,11 +27,11 @@ export class CList {
   constructor(
     courses: Courses,
     outline: Outline,
+    filter: Filter,
     sorter: Sorter) {
     this.courses = courses;
     this.courses$ = courses
-      .chunk$(sorter, 
-        sorter.sortMode$);
+      .chunk$(filter, sorter);
     this.outline = outline;
     this.chunkLen$ = 
       courses.chunkLen$;
