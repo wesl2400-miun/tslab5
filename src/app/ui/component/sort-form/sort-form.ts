@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LabelI } from '../../../logic/interface/LabelI';
 import { Subscription } from 'rxjs';
-import { Sorter } from '../../../logic/service/feature/sorter';
 import { SORT_MODE } from '../../../logic/ref/sortMode';
 import { LABEL } from '../../../logic/ref/label';
 import { SortModeI } from '../../../logic/interface/SortModeI';
+import { Overview } from '../../../logic/service/overview';
 
 @Component({
   selector: 'app-sort-form',
@@ -18,12 +18,12 @@ export class SortForm {
   private subs: Subscription;
   public sortMode: SortModeI;
   public label: LabelI;
-  private sorter: Sorter;
+  private overview: Overview;
 
   // Initiera formuläret och data
   constructor(
     fBuilder: FormBuilder,
-    sorter: Sorter) {
+    overview: Overview) {
     this.form = fBuilder.group({
       sorter: [SORT_MODE.CODE]
     });
@@ -31,7 +31,7 @@ export class SortForm {
     this.label = LABEL;
     this.subs = 
       new Subscription();
-    this.sorter = sorter;
+    this.overview = overview;
   }
 
   // Börja lyssna efter uppdateringar av formuläret
@@ -53,7 +53,7 @@ export class SortForm {
     return this.form.get('sorter')!
       .valueChanges
       .subscribe(value => {
-        this.sorter
+        this.overview
           .sort(value);
       });
   }

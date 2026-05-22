@@ -1,9 +1,9 @@
 <app-filter-form></app-filter-form>
 <app-sort-form></app-sort-form>
 <section>
-  <h2>{{chunkLen$ | async}} av {{total$ | async}}</h2>
+  <h2>{{size$ | async}} av {{maxSize$ | async}}</h2>
   <ul>
-    @for(course of courses$ | async; track course.courseCode) {
+    @for(course of chunk$ | async; track course.courseCode) {
       <li>
         <h3>{{course.courseName}}</h3>
         <p>Kurskod: {{course.courseCode}}</p>

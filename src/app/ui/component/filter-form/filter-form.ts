@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { Filter } from '../../../logic/service/feature/filter';
-import { Courses } from '../../../logic/service/courses';
+import { combineLatest, Observable, Subscription, map } from 'rxjs';
+import { Overview } from '../../../logic/service/overview';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,57 +14,42 @@ import { CommonModule } from '@angular/common';
 export class FilterForm {
   public form: FormGroup;
   private subs: Subscription;
-  private filter: Filter;
+  private overiew: Overview;
   public topics$: Observable<string[]>;
 
-  // Initiera formuläret och data
   constructor(
     fBuilder: FormBuilder,
-    filter: Filter,
-    courses: Courses) {
+    overview: Overview) {
     this.form = fBuilder.group({
-      search: [''],
+      phrase: [''],
       topic: ['']
     });
-    this.subs = new Subscription();
-    this.filter = filter;
-    this.topics$ = courses.topics$;
+    this.subs = 
+      new Subscription();
+    this.overiew = overview;
+    const { topics$ 
+      } = overview;
+    this.topics$ = topics$;
   }
 
-  // Börja lyssna efter uppdateringar av sökfältet
   public ngOnInit() {
     this.subs.add(
-      this.search());
-    this.subs.add(
-      this.topic());
-    this.filter.reset();
+      this.filter());
   }
 
-  // Sluta lyssna efter uppdateringar av sökfältet
-  // för att undvika minnesläckor
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  // Lyssna efter uppdateringar av sökfältet
-  private search = (
+  private filter  = (
     ): Subscription => {
-    return this.form.get('search')!
-      .valueChanges
-      .subscribe(value => {
-        this.filter
-          .update(value);
-      });
+    return this.form
+      .valueChanges.subscribe(
+        ({ topic, phrase }) => {
+        this.overiew.filter(
+          topic, phrase);
+      }
+    )
   }
 
-  // Lyssna efter uppdateringar av fältet för ämnesområde
-  private topic = (
-    ): Subscription => {
-    return this.form.get('topic')!
-      .valueChanges
-      .subscribe(value => {
-        this.filter
-          .update(value);
-      });
-  }
 }

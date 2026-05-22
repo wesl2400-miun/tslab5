@@ -1,3 +1,4 @@
+import { Observable, map, distinctUntilChanged } from "rxjs";
 
 export const node = (
   nodeId: string): HTMLElement => {
@@ -24,20 +25,34 @@ export const load = (
 
 // Kollar om en text innehåller ett angivet sökord
 export const hasPhrase = (
-  phrase: string, 
-  search: string): boolean => {
-  const text = phrase
+  text: string, 
+  phrase: string): boolean => {
+  const org = text
     .toLowerCase();
-  const keyword = search.
+  const keyword = phrase.
     toLowerCase();
-  return text
-    .includes(keyword);
+  return org.includes(
+    keyword);
 }
 
-export const loop = (process: 
-  (index: number) => void, 
-  stop: number): void => {
-  for(let i = 0; i < stop; i++) {
-    process(i);
-  }
+export const extract$ = (
+  from$: Observable<any>,
+  prop: string) => {
+  return from$.pipe(map(
+    item => item[prop]));
 }
+
+export const sort = (
+  prop: string, list: any) => {
+  const compare = 
+    (a: any, b: any): number => {
+      if(a[prop] > b[prop]) 
+          return 1;
+      else if(a[prop] < b[prop])
+        return -1;
+      return 0;
+  }
+  return list.sort(compare);
+}
+
+

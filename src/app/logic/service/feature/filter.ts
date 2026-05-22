@@ -33,6 +33,8 @@ export class Filter {
   public filtered = (
     phrase: string,
     courses: CourseI[]): CourseI[] => {
+    if(phrase === '') 
+      return courses;
     const copy = [...courses];
     return copy.filter(
       course => this.isFound(

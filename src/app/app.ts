@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Network } from './logic/service/network';
 import { Subscription } from 'rxjs';
-import { Courses } from './logic/service/courses';
+import { Overview } from './logic/service/overview';
+import { URL } from './logic/ref/url';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +16,22 @@ export class App {
   private router: Router;
   private subs: Subscription;
   private network: Network;
-  private courses: Courses;
+  private overview: Overview;
 
   constructor(
     router: Router,
     network: Network,
-    courses: Courses) {
+    overview: Overview) {
     this.router = router;
     this.subs = new Subscription();
     this.network = network;
-    this.courses = courses;
+    this.overview = overview;
   }
 
   public ngOnInit() {
-    this.subs.add(this.courses
-      .fetch(this.network));
+    this.subs.add(this.network
+      .connect(URL.COURSES,
+      this.overview.cache));
     this.subs.add(this.onRoute());
   }
 
@@ -44,8 +46,8 @@ export class App {
       .subscribe(val => {
         if(val instanceof 
           NavigationStart) {
-          this.courses.
-            onRoute();
+          this.overview
+            .onRoute();
         }
       })
   }

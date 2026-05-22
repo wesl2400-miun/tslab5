@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { Courses } from '../../../logic/service/courses';
+import { Overview } from '../../../logic/service/overview';
 import { CommonModule } from '@angular/common';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CourseI } from '../../../logic/interface/CourseI';
 import { Outline } from '../../../logic/service/outline';
-import { node } from '../../../logic/util/utils';
+import { extract$, node } from '../../../logic/util/utils';
 import { SortForm } from '../../component/sort-form/sort-form';
-import { Sorter } from '../../../logic/service/feature/sorter';
 import { FilterForm } from '../../component/filter-form/filter-form';
-import { Filter } from '../../../logic/service/feature/filter';
 
 @Component({
   selector: 'app-clist',
@@ -17,26 +15,26 @@ import { Filter } from '../../../logic/service/feature/filter';
   styleUrl: './clist.css',
 })
 export class CList {
-  public courses$: Observable<CourseI[]>;
   private outline: Outline;
-  public chunkLen$: Observable<number>;
-  public total$: Observable<number>;
-  private courses: Courses;
+  private overview: Overview;
+  public size$: Observable<number>;
+  public maxSize$: Observable<number>;
+  public chunk$: Observable<CourseI[]>;
   public load: boolean;
 
   constructor(
-    courses: Courses,
-    outline: Outline,
-    filter: Filter,
-    sorter: Sorter) {
-    this.courses = courses;
-    this.courses$ = courses
-      .chunk$(filter, sorter);
+    overview:Overview,
+    outline: Outline
+  ) {
     this.outline = outline;
-    this.chunkLen$ = 
-      courses.chunkLen$;
-    this.total$ = 
-      courses.total$;
+    this.overview = overview;
+    const { chunk$ } = overview;
+    this.chunk$ = extract$(
+      chunk$, 'chunk');
+    this.size$ = extract$(
+      chunk$, 'size');
+    this.maxSize$ = extract$(
+      chunk$, 'maxSize');
     this.load = true;
   }
 
@@ -60,8 +58,9 @@ export class CList {
 
   public loadMore = 
     (viewId: string) => {
-    this.load = this.courses
-      .nextChunk();
+    this.load = 
+      this.overview
+        .expand();
     node(viewId)
       .scrollIntoView();
   }
