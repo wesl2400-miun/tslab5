@@ -29,8 +29,8 @@ export class CList {
     this.outline = outline;
     this.overview = overview;
     const { chunk$ } = overview;
-    this.chunk$ = extract$(
-      chunk$, 'chunk');
+    this.chunk$ =  extract$(
+      chunk$, 'chunk', true);
     this.size$ = extract$(
       chunk$, 'size');
     this.maxSize$ = extract$(

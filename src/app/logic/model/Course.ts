@@ -1,6 +1,7 @@
 import { CourseI } from "../interface/CourseI";
 
-export class Course implements CourseI {
+export class Course 
+  implements CourseI {
 
   constructor(
     public courseCode: string,

@@ -1,40 +1,42 @@
 import { CourseI } from "../interface/CourseI";
 import { CONSTANT } from "../ref/constant";
-import { SORT_MODE } from "../ref/sortMode";
-import { hasPhrase, sort } from "../util/utils";
+import { Effects } from "./Effects";
 
 export class Chunk {
   public maxSize: number;
   private copy: CourseI[];
-  private org: CourseI[];
   public size: number;
-  public chunk: CourseI[];
+  private effs: Effects | null;
 
   constructor() {
     this.maxSize = 0;
-    this.size = 
-      CONSTANT.CHUNK_LEN;
+    this.size = 0;
     this.copy = [];
-    this.org = [];
-    this.chunk = [];
+    this.effs = null;
+  }
+
+  public chunk = 
+    (): CourseI[] => { 
+    return this.effs!
+      .applyTo(this.copy)
+      .slice(0, this.size);
   }
 
   public init = (
     courses: CourseI[]
     ): void => {
-    this.copy = courses;
-    this.org = courses;
     this.maxSize = 
       courses.length;
-    this.chunk = this.copy
-      .slice(0, this.size);
+    this.copy = courses;
+    this.size = 
+      CONSTANT.CHUNK_LEN;
+    this.effs = new Effects();
   }
 
   public restore = () => {
     this.size = 
       CONSTANT.CHUNK_LEN;
-    this.init(this.org);
-    this.sort(SORT_MODE.CODE);
+    this.init(this.copy);
   }
 
   public load = 
@@ -51,58 +53,25 @@ export class Chunk {
     } else {
       this.size = size;
     }
-    this.chunk = this.copy
-      .slice(0, this.size);
   }
 
   public sort = (
     sortMode: string
   ): void => {
-    this.copy = sort(
-      sortMode, this.copy);
-    this.chunk = this.copy
-      .slice(0, this.size);
+    this.effs?.sortOn(
+      sortMode);
   }
 
   public filter = (
     topic: string, 
-    phrase: string): void => {
-    this.copy = this.org
-      .filter(course =>
-        this.findTopic(
-          topic, course))
-    this.chunk = this.copy
-      .filter(course => 
-        this.findPhrase(
-          phrase, course));
+    phrase: string
+    ): void => {
+    this.effs
+      ?.topicOn(
+        topic);
+    this.effs
+      ?.phraseOn(
+        phrase);
   }
 
-  private findTopic =(
-    topic: string,
-    course: CourseI
-  ): boolean => {
-    const { subject
-      } = course;
-    if(topic === '') {
-      return true;
-    } else {
-      const found =
-        subject === topic;
-      return found;
-    }
-  }
-
-  private findPhrase = (
-    phrase: string,
-    course: CourseI
-  ): boolean => {
-    if(phrase === '')
-      return true;
-    const { courseCode, 
-      courseName} = course;
-    return hasPhrase(
-      courseCode, phrase) 
-      || hasPhrase(
-        courseName, phrase); 
-  }
 }

@@ -37,9 +37,16 @@ export const hasPhrase = (
 
 export const extract$ = (
   from$: Observable<any>,
-  prop: string) => {
-  return from$.pipe(map(
-    item => item[prop]));
+  prop: string,
+  func: boolean = false) => {
+  if(func) {
+    return from$.pipe(map(
+      item => item[prop]()));
+  } else {
+    return from$.pipe(map(
+    item => item[prop]), 
+    distinctUntilChanged());
+  }
 }
 
 export const sort = (
