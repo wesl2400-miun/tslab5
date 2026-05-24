@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CourseI } from '../interface/CourseI';
 import { Error } from './error';
 import { ERR_MSG } from '../ref/errMsg';
