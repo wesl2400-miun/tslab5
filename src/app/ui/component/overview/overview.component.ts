@@ -1,30 +1,28 @@
 import { Component } from '@angular/core';
-import { Overview } from '../../../logic/service/overview';
+import { OverviewService } from '../../../logic/service/overview/overview.service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { CourseI } from '../../../logic/interface/CourseI';
-import { Outline } from '../../../logic/service/outline';
+import { OutlineService } from '../../../logic/service/outline/outline.service';
 import { extract$, node } from '../../../logic/util/utils';
-import { SortForm } from '../../component/sort-form/sort-form';
-import { FilterForm } from '../../component/filter-form/filter-form';
 
 @Component({
-  selector: 'app-clist',
-  imports: [CommonModule, SortForm, FilterForm],
-  templateUrl: './clist.html',
-  styleUrl: './clist.css',
+  selector: 'app-overview',
+  imports: [CommonModule],
+  templateUrl: './overview.component.html',
+  styleUrl: './overview.component.css',
 })
-export class CList {
-  private outline: Outline;
-  private overview: Overview;
+export class OverviewComponent {
+  private outline: OutlineService;
+  private overview: OverviewService;
   public size$: Observable<number>;
   public maxSize$: Observable<number>;
   public chunk$: Observable<CourseI[]>;
   public load: boolean;
 
   constructor(
-    overview:Overview,
-    outline: Outline
+    overview:OverviewService,
+    outline: OutlineService
   ) {
     this.outline = outline;
     this.overview = overview;
@@ -40,7 +38,7 @@ export class CList {
 
   public addCourse = 
     (course: CourseI): void => {
-    this.outline.add(course);
+    //this.outline.add(course);
   }
 
   public changeDesc = (
@@ -65,3 +63,4 @@ export class CList {
       .scrollIntoView();
   }
 }
+

@@ -1,21 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ERR_MSG } from '../ref/errMsg';
-import { Error } from './error';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Network {
+export class NetworkService {
   private http: HttpClient;
-  private error: Error;
 
   constructor(
-    http: HttpClient, 
-    error: Error) {
+    http: HttpClient) {
     this.http = http;
-    this.error = error;
   }
 
   public connect = (
@@ -24,14 +19,16 @@ export class Network {
   ): Subscription => {
     return this.http.get(url)
       .subscribe({
-        next: (data) => 
+        next: (data: any) => 
           onConnect(data),
-        error: this.onError
+        error: (err: any) => 
+          this.onError(err)
       });
   }
 
-  private onError = () => {
-    this.error.update(
-      ERR_MSG.NETWORK_FAIL);
+  private onError = (
+    err: any) => {
+    console.error(
+      err.message);
   }
 }

@@ -1,7 +1,6 @@
-<app-filter-form></app-filter-form>
-<app-sort-form></app-sort-form>
 <section>
-  <h2>{{size$ | async}} av {{maxSize$ | async}}</h2>
+  <h2>Skapa eget ramschema</h2>
+  <p>Listar {{size$ | async}} kurser av totalt {{maxSize$ | async}}</p>
   <ul>
     @for(course of chunk$ | async; track course.courseCode) {
       <li>

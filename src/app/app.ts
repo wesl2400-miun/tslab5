@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Network } from './logic/service/network';
+import { NetworkService } from './logic/service/network/network.service';
 import { Subscription } from 'rxjs';
-import { Overview } from './logic/service/overview';
+import { OverviewService } from './logic/service/overview/overview.service';
 import { URL } from './logic/ref/url';
 
 @Component({
@@ -15,13 +15,13 @@ export class App {
   protected readonly title = signal('tslab5');
   private router: Router;
   private subs: Subscription;
-  private network: Network;
-  private overview: Overview;
+  private network: NetworkService;
+  private overview: OverviewService;
 
   constructor(
     router: Router,
-    network: Network,
-    overview: Overview) {
+    network: NetworkService,
+    overview: OverviewService) {
     this.router = router;
     this.subs = new Subscription();
     this.network = network;

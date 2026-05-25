@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CourseI } from '../interface/CourseI';
-import { Catalog } from '../model/Catalog';
-import { Chunk } from '../model/Chunk';
+import { CourseI } from '../../interface/CourseI';
+import { Catalog } from '../../model/Catalog';
+import { Chunk } from '../../model/Chunk';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Overview {
+export class OverviewService {
   private chunkSbj: 
     BehaviorSubject<Chunk>;
   public chunk$: 
@@ -89,3 +89,4 @@ export class Overview {
       .next(chunk);
   }
 }
+

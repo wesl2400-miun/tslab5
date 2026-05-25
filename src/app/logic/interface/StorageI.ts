@@ -1,4 +1,4 @@
 
 export interface StorageI {
-  OUTLINE: string
+  SCHEDULE: string
 }

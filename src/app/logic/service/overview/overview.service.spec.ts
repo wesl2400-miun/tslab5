@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Outline } from './outline';
+import { OverviewService } from './overview.service';
 
-describe('Outline', () => {
-  let service: Outline;
+describe('OverviewService', () => {
+  let service: OverviewService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Outline);
+    service = TestBed.inject(OverviewService);
   });
 
   it('should be created', () => {

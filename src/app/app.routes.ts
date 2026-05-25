@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
-import { Testing } from './ui/page/testing/testing';
-import { CList } from './ui/page/clist/clist';
+
+import { HomeComponent } from './ui/page/home/home.component';
+import { DashboardComponent } from './ui/page/dashboard/dashboard.component';
+
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'overview', pathMatch: 'full' },
-  { path: 'overview', component: CList },
-  { path: 'testing', component: Testing }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'dashboard', component: DashboardComponent }
 ];

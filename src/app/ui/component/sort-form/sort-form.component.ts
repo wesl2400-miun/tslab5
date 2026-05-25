@@ -5,25 +5,24 @@ import { Subscription } from 'rxjs';
 import { SORT_MODE } from '../../../logic/ref/sortMode';
 import { LABEL } from '../../../logic/ref/label';
 import { SortModeI } from '../../../logic/interface/SortModeI';
-import { Overview } from '../../../logic/service/overview';
+import { OverviewService } from '../../../logic/service/overview/overview.service';
 
 @Component({
   selector: 'app-sort-form',
   imports: [ReactiveFormsModule],
-  templateUrl: './sort-form.html',
-  styleUrl: './sort-form.css',
+  templateUrl: './sort-form.component.html',
+  styleUrl: './sort-form.component.css',
 })
-export class SortForm {
+export class SortFormComponent {
   public form: FormGroup;
   private subs: Subscription;
   public sortMode: SortModeI;
   public label: LabelI;
-  private overview: Overview;
+  private overview: OverviewService;
 
-  // Initiera formuläret och data
   constructor(
     fBuilder: FormBuilder,
-    overview: Overview) {
+    overview: OverviewService) {
     this.form = fBuilder.group({
       sorter: [SORT_MODE.CODE]
     });
@@ -34,20 +33,15 @@ export class SortForm {
     this.overview = overview;
   }
 
-  // Börja lyssna efter uppdateringar av formuläret
   public ngOnInit() {
     this.subs.add(
       this.sort());
   }
 
-  // Sluta lyssna efter uppdateringar, så
-  // att Rx-flödet inte fortsätter köra i bakgrunden
-  // och orsakar inte minnesläckor
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  // Lyssna efter uppdateringar av radioknappar för sortering
   private sort = (
     ): Subscription => {
     return this.form.get('sorter')!

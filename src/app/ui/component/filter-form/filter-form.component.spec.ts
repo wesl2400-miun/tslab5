@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CList } from './clist';
+import { FilterFormComponent } from './filter-form.component';
 
-describe('CList', () => {
-  let component: CList;
-  let fixture: ComponentFixture<CList>;
+describe('FilterFormComponent', () => {
+  let component: FilterFormComponent;
+  let fixture: ComponentFixture<FilterFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CList],
+      imports: [FilterFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CList);
+    fixture = TestBed.createComponent(FilterFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

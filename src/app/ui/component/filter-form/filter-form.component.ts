@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { combineLatest, Observable, Subscription, map } from 'rxjs';
-import { Overview } from '../../../logic/service/overview';
+import { Observable, Subscription, map } from 'rxjs';
+import { OverviewService } from '../../../logic/service/overview/overview.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-filter-form',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './filter-form.html',
-  styleUrl: './filter-form.css',
+  templateUrl: './filter-form.component.html',
+  styleUrl: './filter-form.component.css',
 })
-export class FilterForm {
+export class FilterFormComponent {
   public form: FormGroup;
   private subs: Subscription;
-  private overiew: Overview;
+  private overiew: OverviewService;
   public topics$: Observable<string[]>;
 
   constructor(
     fBuilder: FormBuilder,
-    overview: Overview) {
+    overview: OverviewService) {
     this.form = fBuilder.group({
       phrase: [''],
       topic: ['']
@@ -51,5 +51,4 @@ export class FilterForm {
       }
     )
   }
-
 }

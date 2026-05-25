@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortForm } from './sort-form';
+import { OverviewComponent } from './overview.component';
 
-describe('SortForm', () => {
-  let component: SortForm;
-  let fixture: ComponentFixture<SortForm>;
+describe('OverviewComponent', () => {
+  let component: OverviewComponent;
+  let fixture: ComponentFixture<OverviewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortForm],
+      imports: [OverviewComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortForm);
+    fixture = TestBed.createComponent(OverviewComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

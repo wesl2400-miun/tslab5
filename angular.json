@@ -5,6 +5,19 @@
     "packageManager": "npm",
     "analytics": "d40da529-0698-4fd6-9321-3a00cb527f37"
   },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component",
+      "style": "css",
+      "skipTests": false,
+      "flat": false
+    },
+    "@schematics/angular:service": {
+      "type": "service",
+      "skipTests": false,
+      "flat": false
+    }
+  },
   "newProjectRoot": "projects",
   "projects": {
     "tslab5": {

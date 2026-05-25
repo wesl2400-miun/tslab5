@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Error } from './error';
+import { OutlineService } from './outline.service';
 
-describe('Errors', () => {
-  let service: Error;
+describe('OutlineService', () => {
+  let service: OutlineService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Error);
+    service = TestBed.inject(OutlineService);
   });
 
   it('should be created', () => {
