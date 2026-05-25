@@ -1,5 +1,5 @@
 <section>
-  <h2>Skapa eget ramschema</h2>
+  <h2>Kurser</h2>
   <p>Listar {{size$ | async}} kurser av totalt {{maxSize$ | async}}</p>
   <ul>
     @for(course of chunk$ | async; track course.courseCode) {
@@ -15,7 +15,11 @@
           <p>Organisationskod: {{course.institutionCode}}</p>
           <a target="_blank" [href]="course.syllabus">Kursplan</a>
         }
-        <button (click)="addCourse(course)">Lägg till</button>
+        @if(!hideCourse(course.courseCode)) {
+          <button (click)="addCourse(course)">Lägg till</button>
+        } @else {
+          <p>TILLAGT</p>
+        } 
       </li>
     }
   </ul>

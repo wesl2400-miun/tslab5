@@ -5,7 +5,7 @@ import { Effects } from "./Effects";
 export class Chunk {
   public maxSize: number;
   private copy: CourseI[];
-  public size: number;
+  private size: number;
   private effs: Effects | null;
 
   constructor() {
@@ -20,6 +20,12 @@ export class Chunk {
     return this.effs!
       .applyTo(this.copy)
       .slice(0, this.size);
+  }
+
+  public getSize = 
+    (): number => {
+    return this.chunk()
+      .length;
   }
 
   public init = (
@@ -60,6 +66,8 @@ export class Chunk {
   ): void => {
     this.effs?.sortOn(
       sortMode);
+    this.size = 
+      CONSTANT.CHUNK_LEN;
   }
 
   public filter = (
@@ -72,6 +80,7 @@ export class Chunk {
     this.effs
       ?.phraseOn(
         phrase);
+    this.size = 
+      CONSTANT.CHUNK_LEN;
   }
-
 }

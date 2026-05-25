@@ -30,15 +30,23 @@ export class OverviewComponent {
     this.chunk$ =  extract$(
       chunk$, 'chunk', true);
     this.size$ = extract$(
-      chunk$, 'size');
+      chunk$, 'getSize', true);
     this.maxSize$ = extract$(
       chunk$, 'maxSize');
     this.load = true;
   }
 
-  public addCourse = 
-    (course: CourseI): void => {
-    //this.outline.add(course);
+  public hideCourse = 
+    (code: string): boolean => {
+    return this.outline
+      .hasCourse(code);
+  }
+
+  public addCourse = (
+    course: CourseI
+    ): void => {
+    this.outline
+      .addCourse(course);
   }
 
   public changeDesc = (

@@ -3,40 +3,81 @@ import { STORAGE } from "../ref/storage";
 import { load, save } from "../util/utils";
 
 export class Schedule {
-  private chosen: CourseI[];
+  public chosen: CourseI[];
+  private added: Set<string>;
   
   constructor() {
     this.chosen = [];
+    this.added = 
+      new Set();
+  }
+
+  public getSize = 
+    (): number => {
+    return this.chosen
+      .length;
+  }
+
+  public hasCourse = (
+    code: string
+    ): boolean => {
+    return this.added
+      .has(code);
+  }
+
+  public init = 
+    (): void => {
+    this.tryLoad();
+    this.chosen.forEach(
+      course => {
+      const { courseCode 
+        } = course;
+      this.added.add(
+        courseCode);
+    })
+  }
+
+  public points = 
+    (): number => {
+    let sum = 0;
+    this.chosen.forEach(
+      course => {
+      sum += course.points;
+    });
+    return sum;
   }
 
   public add = (
-    newCour: CourseI
+    course: CourseI
     ): void => {
     const duplicate: boolean = 
       this.isDuplicate(
-        this.chosen, newCour);
+        this.chosen, course);
     if(!duplicate) {
-      newCour.added = true;
       const copy = 
         [...this.chosen, 
-          newCour];
+          course];
       this.trySave(copy);
+      const { courseCode 
+        } = course;
+      this.added.add(
+        courseCode);
     }
   }
 
   public remove = (
-    remCourse: CourseI
+    course: CourseI
     ): void => {
+    const { courseCode 
+      } = course;
     const copy = this.chosen
-      .filter(course => {
-        const a = course
-          .courseCode;
-        const b = remCourse
-          .courseCode;
-        return a !== b;
+      .filter(c => {
+        return courseCode 
+          !== c.courseCode;
       });
     this.trySave(copy);
-    remCourse.added = false;
+    this.added.delete(
+      courseCode);
   }
 
   private isDuplicate = (
@@ -66,7 +107,7 @@ export class Schedule {
     }
   }
   
-  public tryLoad = 
+  private tryLoad = 
     (): void => {
     try {
       const stored: any = 

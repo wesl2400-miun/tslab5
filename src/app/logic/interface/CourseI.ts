@@ -9,6 +9,5 @@ export interface CourseI {
   institutionCode: string,
   subject: string,
   syllabus: string,
-  added: boolean,
   showMore: boolean
 }

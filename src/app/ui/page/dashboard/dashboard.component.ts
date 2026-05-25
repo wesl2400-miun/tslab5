@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { OutlineComponent } from '../../component/outline/outline.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [OutlineComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })

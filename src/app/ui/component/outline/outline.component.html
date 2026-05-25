@@ -1,0 +1,20 @@
+<section>
+  <h2>Mitt ramschema</h2>
+  <p>Antal kuser {{size$ | async}}</p>
+  <p>Totalt antal poäng {{points$ | async}}</p>
+  <ul>
+    @for(course of chosen$ | async; track course.courseCode) {
+      <li>
+        <h3>{{course.courseName}}</h3>
+        <p>Kurskod: {{course.courseCode}}</p>
+        <p>Progression: {{course.progression}}</p>
+        <p>Poäng: {{course.points}}</p>
+        <p>Ämne: {{course.subject}}</p>
+        <p>Nivå: {{course.level}}</p>
+        <p>Organisationskod: {{course.institutionCode}}</p>
+        <a target="_blank" [href]="course.syllabus">Kursplan</a>
+        <button (click)="remCourse(course)">Ta bort</button>
+      </li>
+    }
+  </ul>
+</section>
