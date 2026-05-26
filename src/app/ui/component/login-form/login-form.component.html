@@ -1,0 +1,23 @@
+<section>
+  <h2>Logga in</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <label for="email">E-post</label>
+    <input id="email" type="email"
+      formControlName="email" 
+      placeholder="erik_nilsson@gmail.com"> 
+
+    <label for="pass">E-post</label>
+    <input id="pass" type="password"
+      formControlName="pass" 
+      placeholder="FakePassword0+"> 
+
+    <input type="submit" value="Logga in">
+
+    @if(mismatch) {
+      <p>Fel användarnamn eller lösenord.</p>
+    }
+  </form>
+  <p>Har inget konto? <a routerLink="/account">Skapa konto</a></p>
+</section>
+

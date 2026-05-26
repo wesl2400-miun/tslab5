@@ -1,0 +1,44 @@
+<section>
+  <h2>Skapa konto</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label for="fName">Förnamn</label>
+    <input id="fName" type="text" required 
+      formControlName="fName" 
+      placeholder="Erik"> 
+
+    <label for="lName">Efternamn</label>
+    <input id="lName" type="text"
+      formControlName="lName" 
+      placeholder="Nilsson"> 
+
+    <label for="email">E-post</label>
+    <input id="email" type="email"
+      formControlName="email" 
+      placeholder="erik_nilsson@gmail.com"> 
+
+    <label for="pass">Lösenord</label>
+    <input id="pass" type="password"
+      formControlName="pass" 
+      placeholder="FakePassword0+"> 
+
+    <input type="submit" value="Skapa konto">
+
+    <ul>
+      @if(exists) {
+        <li><p>Det finns redan ett konto som är kopplat till denna e-post</p></li>
+      }
+      @if(fName.invalid) {
+        <li><p>Förnamn är obligatoriskt</p></li>
+      }
+      @if(lName.invalid) {
+        <li><p>Efternamn är obligatoriskt</p></li>
+      }
+      @if(email.invalid) {
+        <li><p>Inkorrekt e-post</p></li>
+      }
+      @if(pass.invalid) {
+        <li><p>Lösendord måste vara minst 8 tecken långt, innehålla minst en siffra samt ett av följande specialtecken: !@?+&%$</p></li>
+      }
+    </ul>
+  </form>
+</section>

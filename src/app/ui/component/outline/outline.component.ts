@@ -4,7 +4,6 @@ import { CourseI } from '../../../logic/interface/CourseI';
 import { OutlineService } from '../../../logic/service/outline/outline.service';
 import { extract$ } from '../../../logic/util/utils';
 import { CommonModule } from '@angular/common';
-import { OverviewService } from '../../../logic/service/overview/overview.service';
 
 @Component({
   selector: 'app-outline',
