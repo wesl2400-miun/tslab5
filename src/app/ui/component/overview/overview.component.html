@@ -1,6 +1,7 @@
 <section>
   <h2>Kurser</h2>
-  <p>Listar {{size$ | async}} kurser av totalt {{maxSize$ | async}}</p>
+  <h3>Listar {{size$ | async}} kurser av totalt {{maxSize$ | async}}</h3>
+  <p>Du måste vara inloggad för att lägga till kurser.</p>
   <ul>
     @for(course of chunk$ | async; track course.courseCode) {
       <li>
