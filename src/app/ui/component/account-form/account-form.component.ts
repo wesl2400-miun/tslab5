@@ -54,7 +54,6 @@ export class AccountFormComponent {
         confpass } = form;
       this.confPass = 
         pass !== confpass;
-      console.log(pass, confpass)
       if(this.exists) {
         this.exists = false;
         console.log(this.exists);
