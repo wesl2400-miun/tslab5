@@ -19,6 +19,11 @@
     <label for="pass">Lösenord</label>
     <input id="pass" type="password"
       formControlName="pass" 
+      placeholder="FakePassword0+">
+
+    <label for="confpass">Bekräfta lösenord</label>
+    <input id="confpass" type="password"
+      formControlName="confpass" 
       placeholder="FakePassword0+"> 
 
     <input type="submit" value="Skapa konto">
@@ -26,6 +31,9 @@
     <ul>
       @if(exists) {
         <li><p>Det finns redan ett konto som är kopplat till denna e-post</p></li>
+      }
+      @if(confPass) {
+        <li><p>Lösnord matchar inte</p></li>
       }
       @if(fName.invalid) {
         <li><p>Förnamn är obligatoriskt</p></li>

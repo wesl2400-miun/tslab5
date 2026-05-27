@@ -18,6 +18,7 @@ export class AccountFormComponent {
   private account: AccountService;
   private router: Router;
   public exists: boolean;
+  public confPass: boolean;
 
   constructor(
     fBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class AccountFormComponent {
     this.subs = 
       new Subscription();
     this.exists = false;
+    this.confPass = false;
     this.router = router;
     this.form = 
       this.initForm(
@@ -47,7 +49,12 @@ export class AccountFormComponent {
     return this.form
       .valueChanges
       .subscribe(
-        _ => {
+        form => {
+      const { pass, 
+        confpass } = form;
+      this.confPass = 
+        pass !== confpass;
+      console.log(pass, confpass)
       if(this.exists) {
         this.exists = false;
         console.log(this.exists);
@@ -71,7 +78,8 @@ export class AccountFormComponent {
         Validators.minLength(8), 
         Validators.pattern(
           /^(?=.*[0-9])(?=.*[!@?+&%$]).+$/),
-      ]]
+      ]],
+      confpass: ['']
     });
   }
 
