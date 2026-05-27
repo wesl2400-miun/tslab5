@@ -1,69 +1,51 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { UserI } from '../../interface/UserI';
 import { Account } from '../../model/Account';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private accSbj: BehaviorSubject<Account>;
-  public account$: Observable<Account>;
+  private account: Account;
+  private dashboard: DashboardService;
   
-  constructor() {
-    this.accSbj = 
-      new BehaviorSubject(
-        new Account());
-    this.account$ = this.accSbj
-      .asObservable();
+  constructor(
+    dashboard: DashboardService) {
+    this.account = 
+      new Account();
+    this.dashboard = 
+      dashboard;
   }
 
   public exists = (
     email: string
     ): boolean => {
-    const account = 
-      this.accSbj
-        .getValue();
-    return account
+    return this.account
       .exists(email);
-  }
-
-  public logout = 
-    (): void => {
-    const account = 
-      this.accSbj
-        .getValue();
-    account.logout();
-    this.accSbj.next(
-      account);
   }
 
   public login = (
     email: string, 
     pass: string
     ): boolean => {
-    const account = 
-      this.accSbj
-        .getValue();
-    const match = 
-      account.login(
-        email, pass);
-    this.accSbj.next(
-      account);
-    return match;
+    const user = 
+      this.account
+      .login(email, 
+        pass);
+    this.dashboard
+      .update(user);
+    return user !== null;
   }
 
-
   public create = (
-    user: UserI
+    newUser: UserI
     ): boolean => {
-    const account = 
-      this.accSbj
-        .getValue();
-    const success =
-      account.create(user);
-    this.accSbj
-        .next(account);
-    return success;
+    const user = 
+      this.account
+      .create(newUser);
+    this.dashboard
+      .update(user);
+    return user !== null;
   }
 }

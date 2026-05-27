@@ -1,46 +1,29 @@
 import { CourseI } from "../interface/CourseI";
-import { STORAGE } from "../ref/storage";
+import { UserI } from "../interface/UserI";
 import { load, save } from "../util/utils";
 
 export class Schedule {
-  public chosen: CourseI[];
-  private added: Set<string>;
-  
-  constructor() {
-    this.chosen = [];
-    this.added = 
-      new Set();
-  }
 
-  public getSize = 
-    (): number => {
-    return this.chosen
-      .length;
+  public upload = (
+    email: string
+    ): UserI | null => {
+    return this.tryLoad(email);
   }
 
   public hasCourse = (
-    code: string
+    code: string,
+    user: UserI | null
     ): boolean => {
-    return this.added
-      .has(code);
+    return user?.courses
+      .some(c => c.courseCode 
+        === code) as boolean;
   }
 
-  public init = 
-    (): void => {
-    this.tryLoad();
-    this.chosen.forEach(
-      course => {
-      const { courseCode 
-        } = course;
-      this.added.add(
-        courseCode);
-    })
-  }
-
-  public points = 
-    (): number => {
+  public points = (
+    user: UserI | null
+    ): number => {
     let sum = 0;
-    this.chosen.forEach(
+    user?.courses.forEach(
       course => {
       sum += course.points;
     });
@@ -48,79 +31,58 @@ export class Schedule {
   }
 
   public add = (
-    course: CourseI
-    ): void => {
-    const duplicate: boolean = 
-      this.isDuplicate(
-        this.chosen, course);
-    if(!duplicate) {
-      const copy = 
-        [...this.chosen, 
-          course];
-      this.trySave(copy);
-      const { courseCode 
-        } = course;
-      this.added.add(
-        courseCode);
-    }
+    newCour: CourseI,
+    user: UserI | null
+    ): UserI | null => {
+    if(!user) 
+      return null;
+    const { email, 
+      courses } = user;
+    courses.push(
+      newCour);
+    this.trySave(
+      email, user);
+    return user;
   }
 
   public remove = (
-    course: CourseI
-    ): void => {
-    const { courseCode 
-      } = course;
-    const copy = this.chosen
-      .filter(c => {
-        return courseCode 
-          !== c.courseCode;
-      });
-    this.trySave(copy);
-    this.added.delete(
-      courseCode);
-  }
-
-  private isDuplicate = (
-    courses: CourseI[],
-    newCour: CourseI
-  ): boolean => {
-    return courses
-      .some(course => {
-        const a = course
-          .courseCode;
-        const b = newCour
-          .courseCode;
-        return a === b;
-      });
+    code: string,
+    user: UserI | null
+    ): UserI | null => {
+    if(!user) 
+      return null;
+    const { email, 
+      courses } = user;
+    const copy = courses
+      .filter(c => 
+        c.courseCode 
+        !== code);
+    user.courses = copy;
+    this.trySave(
+      email, user);
+    return user;
   }
 
   private trySave = (
-    copy: CourseI[]
-    ): void => {
+    email: string,
+    user: UserI) => {
     try {
-      save(STORAGE
-        .SCHEDULE, copy);
-      this.chosen = copy;
+      save(email, user);
     } catch(err: any) {
         console.error(
           err.message);
     }
   }
   
-  private tryLoad = 
-    (): void => {
+  private tryLoad = (
+    email: string
+    ): UserI | null => {
     try {
-      const stored: any = 
-        load(STORAGE
-          .SCHEDULE)
-        || [] as CourseI[];
-      if(stored) {
-        this.chosen = 
-          stored;
-      }
+      return load(email);
     } catch(err: any) {
       console.error(
         err.message);
+      return null;
     }
   }
 }

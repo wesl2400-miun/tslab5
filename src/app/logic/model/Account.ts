@@ -2,17 +2,6 @@ import { UserI } from "../interface/UserI";
 import { load, save } from "../util/utils";
 
 export class Account {
-  public user: UserI | null;
-  
-  constructor() {
-    this.user = null;
-  }
-
-  public logged = 
-    (): boolean => {
-    return this.user 
-      !== null;
-  }
 
   public exists = (
     email: string
@@ -24,35 +13,28 @@ export class Account {
   public login = (
     email: string,
     pass: string,
-    ): boolean => {
+    ): UserI | null => {
     const user = 
       this.tryLoad(
         email);
     const match: boolean = 
       email === user?.email 
       && pass === user?.pass;
-    if(match)
-      this.user = user;
-    return match;
-  }
-
-  public logout = 
-    (): void => {
-    this.user = null;
+    if(match) return user;
+    return null;
   }
 
   public create = (
     user: UserI
-    ): boolean => {
+    ): UserI | null => {
     const { email } = user;
     const inStore = 
       this.tryLoad(
         email);
     if(inStore) 
-      return false;
+      return null;
     this.trySave(user);
-    this.user = user;
-    return true;
+    return user;
   }
 
   private trySave = (
@@ -72,9 +54,7 @@ export class Account {
     email: string
     ): UserI | null => {
     try {
-      const user = 
-        load(email);
-      return user;
+      return load(email);
     } catch(err: any) {
       console.error(
         err.message);

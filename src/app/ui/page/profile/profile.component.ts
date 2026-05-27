@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginFormComponent } from '../../component/login-form/login-form.component';
-import { Observable } from 'rxjs';
-import { UserI } from '../../../logic/interface/UserI';
-import { AccountService } from '../../../logic/service/account/account.service';
-import { extract$ } from '../../../logic/util/utils';
 import { CommonModule } from '@angular/common';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DashboardComponent } from '../../component/dashboard/dashboard.component';
+import { DashboardService } from '../../../logic/service/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,16 +14,16 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
-  public logged$: Observable<UserI>;
-  public user$: Observable<UserI>;
+  private dashboard: DashboardService;
 
   constructor(
-    account: AccountService) {
-    const { account$ 
-      } = account;
-    this.logged$ = extract$(
-      account$, 'logged', true);
-    this.user$ = extract$(
-      account$, 'user');
+    dashboard: DashboardService) {
+    this.dashboard = dashboard;
+  }
+
+  public logged = 
+    (): boolean => {
+    return this.dashboard
+      .logged();
   }
 }

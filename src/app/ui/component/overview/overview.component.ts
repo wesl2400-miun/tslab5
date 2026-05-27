@@ -3,8 +3,8 @@ import { OverviewService } from '../../../logic/service/overview/overview.servic
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { CourseI } from '../../../logic/interface/CourseI';
-import { OutlineService } from '../../../logic/service/outline/outline.service';
 import { extract$, node } from '../../../logic/util/utils';
+import { DashboardService } from '../../../logic/service/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-overview',
@@ -13,7 +13,7 @@ import { extract$, node } from '../../../logic/util/utils';
   styleUrl: './overview.component.css',
 })
 export class OverviewComponent {
-  private outline: OutlineService;
+  private dashboard: DashboardService;
   private overview: OverviewService;
   public size$: Observable<number>;
   public maxSize$: Observable<number>;
@@ -22,9 +22,9 @@ export class OverviewComponent {
 
   constructor(
     overview:OverviewService,
-    outline: OutlineService
+    dashboard: DashboardService
   ) {
-    this.outline = outline;
+    this.dashboard = dashboard;
     this.overview = overview;
     const { chunk$ } = overview;
     this.chunk$ =  extract$(
@@ -38,14 +38,15 @@ export class OverviewComponent {
 
   public hideCourse = 
     (code: string): boolean => {
-    return this.outline
-      .hasCourse(code);
+    return this.dashboard
+      .hasCourse(code) 
+      || !this.dashboard.logged();
   }
 
   public addCourse = (
     course: CourseI
     ): void => {
-    this.outline
+    this.dashboard
       .addCourse(course);
   }
 

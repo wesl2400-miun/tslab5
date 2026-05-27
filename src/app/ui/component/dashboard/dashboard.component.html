@@ -1,9 +1,16 @@
 <section>
+  <h2>Mina uppgifter</h2>
+  <p>Förnamn: {{user.fName}}</p>
+  <p>Efternamn: {{user.lName}}</p>
+  <p>E-post: {{user.email}}</p>
+  <button (click)="logout()">Logga ut</button>
+</section>
+<section>
   <h2>Mitt ramschema</h2>
-  <p>Antal kuser {{size$ | async}}</p>
-  <p>Totalt antal poäng {{points$ | async}}</p>
+  <p>Antal kuser {{total}}</p>
+  <p>Totalt antal poäng {{points}}</p>
   <ul>
-    @for(course of chosen$ | async; track course.courseCode) {
+    @for(course of user.courses; track course.courseCode) {
       <li>
         <h3>{{course.courseName}}</h3>
         <p>Kurskod: {{course.courseCode}}</p>
@@ -13,7 +20,7 @@
         <p>Nivå: {{course.level}}</p>
         <p>Organisationskod: {{course.institutionCode}}</p>
         <a target="_blank" [href]="course.syllabus">Kursplan</a>
-        <button (click)="remCourse(course)">Ta bort</button>
+        <button (click)="remCourse(course.courseCode)">Ta bort</button>
       </li>
     }
   </ul>
