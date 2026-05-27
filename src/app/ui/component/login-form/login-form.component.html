@@ -14,7 +14,7 @@
 
     <input type="submit" value="Logga in">
 
-    @if(mismatch) {
+    @if(mismatch$ | async) {
       <p>Fel användarnamn eller lösenord.</p>
     }
   </form>

@@ -1,5 +1,5 @@
 import { UserI } from "../interface/UserI";
-import { load, save } from "../util/utils";
+import { hashPass, load, matchHash, save } from "../util/utils";
 
 export class Account {
 
@@ -10,40 +10,45 @@ export class Account {
       email) !== null;
   }
 
-  public login = (
+  public login = async(
     email: string,
     pass: string,
-    ): UserI | null => {
+    ): Promise<UserI | null> => {
     const user = 
       this.tryLoad(
         email);
     const match: boolean = 
-      email === user?.email 
-      && pass === user?.pass;
+      await matchHash(pass, 
+        user?.pass || '');
     if(match) return user;
     return null;
   }
 
-  public create = (
+  public create = async (
     user: UserI
-    ): UserI | null => {
+    ): Promise<UserI | null> => {
     const { email } = user;
     const inStore = 
       this.tryLoad(
         email);
     if(inStore) 
       return null;
-    this.trySave(user);
+    await this.trySave(user);
     return user;
   }
 
-  private trySave = (
+  private trySave = async (
     user: UserI
-    ): void => {
+    ): Promise<void> => {
     try {
-      const { email
-        } = user;
-      save(email, user);
+      const { email,
+        pass } = user;
+      const hash = 
+        await hashPass(pass);
+      if(hash) {
+        user.pass = hash;
+        save(email, user);
+      }
     } catch(err: any) {
       console.error(
         err.message);

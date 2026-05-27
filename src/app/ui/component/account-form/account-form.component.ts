@@ -95,7 +95,8 @@ export class AccountFormComponent {
       .get('pass');
   }
 
-  public submit = (): void => {
+  public submit = 
+    async (): Promise<void> => {
     if(this.form.invalid)
       return;
     const { fName, lName, 
@@ -107,8 +108,9 @@ export class AccountFormComponent {
     const user = new User(
       fName, lName, 
       email, pass);
-    const success = this.account
-      .create(user);
+    const success = 
+      await this.account
+        .create(user);
     if(success) {
       this.router.navigate(
         ['/profile']);

@@ -25,12 +25,12 @@ export class AccountService {
       .exists(email);
   }
 
-  public login = (
+  public login = async (
     email: string, 
     pass: string
-    ): boolean => {
+    ): Promise<boolean> => {
     const user = 
-      this.account
+      await this.account
       .login(email, 
         pass);
     this.dashboard
@@ -38,11 +38,11 @@ export class AccountService {
     return user !== null;
   }
 
-  public create = (
+  public create = async (
     newUser: UserI
-    ): boolean => {
+    ): Promise<boolean> => {
     const user = 
-      this.account
+      await this.account
       .create(newUser);
     this.dashboard
       .update(user);

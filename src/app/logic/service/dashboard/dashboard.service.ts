@@ -29,12 +29,17 @@ export class DashboardService {
       .next(user);
   }
 
+  private get user
+    (): UserI | null {
+    return this.userSbj
+      .getValue();
+  }
+
   public hasCourse = (
     code: string
     ): boolean => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     return this.schedule
       .hasCourse(
         code, user);
@@ -42,8 +47,7 @@ export class DashboardService {
 
   public points = (): number => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     return this.schedule
       .points(user);
   }
@@ -51,8 +55,7 @@ export class DashboardService {
   public total = 
     (): number => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     return user
       ?.courses
       .length || 0;
@@ -67,8 +70,7 @@ export class DashboardService {
   public logged = 
     (): boolean => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     return user !== null;
   }
   
@@ -76,8 +78,7 @@ export class DashboardService {
     newCour: CourseI
     ): void => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     const updated = 
       this.schedule
       .add(newCour, user);
@@ -87,8 +88,7 @@ export class DashboardService {
   public remCourse = (
     code: string): void => {
     const user: UserI | null
-     = this.userSbj
-      .getValue();
+     = this.user;
     const updated = 
       this.schedule
       .remove(code, user);

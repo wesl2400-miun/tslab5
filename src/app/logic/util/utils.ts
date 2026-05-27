@@ -1,4 +1,5 @@
 import { Observable, map, distinctUntilChanged } from "rxjs";
+import bcrypt from "bcryptjs";
 
 export const node = (
   nodeId: string): HTMLElement => {
@@ -60,6 +61,33 @@ export const sort = (
       return 0;
   }
   return list.sort(compare);
+}
+
+export const hashPass = async (
+  pass: string
+  ): Promise<string | null> => {
+  try {
+    return await bcrypt
+    .hash(pass, 10);
+  } catch(err: any) {
+    console.error(
+      err.message);
+    return null;
+  }
+}
+
+export const matchHash = async (
+  pass: string,
+  hash: string
+  ): Promise<boolean> => {
+  try {
+    return await bcrypt
+      .compare(pass, hash);
+  } catch(err: any) {
+    console.error(
+      err.message);
+    return false;
+  }
 }
 
 
