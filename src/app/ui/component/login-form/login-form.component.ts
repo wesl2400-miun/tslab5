@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../../../logic/service/account/account.service';
 import { Router, RouterLink } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -16,11 +15,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 })
 export class LoginFormComponent {
   public form: FormGroup;
-  private subs: Subscription;
   private account: AccountService;
-  private misSbj: BehaviorSubject<boolean>;
-  public mismatch$: Observable<boolean>;
-
   private router: Router;
 
   constructor(
@@ -28,11 +23,6 @@ export class LoginFormComponent {
     account: AccountService,
     router: Router) {
     this.account = account;
-    this.subs = new Subscription();
-    this.misSbj = 
-      new BehaviorSubject(false);
-    this.mismatch$ = this.misSbj
-      .asObservable();
     this.router = router;
     this.form = fBuilder.group({
       email: [''],
@@ -50,12 +40,10 @@ export class LoginFormComponent {
     const { email, 
       pass } = this.form
       .getRawValue();
-    const mismatch =
-      !await this.account
+    const match = 
+      await this.account
         .login(email, pass);
-    this.misSbj.next(
-      mismatch);
-    if(!mismatch) {
+    if(match) {
       this.router.navigate(
         ['/profile']);
     }

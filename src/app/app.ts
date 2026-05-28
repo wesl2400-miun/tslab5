@@ -4,10 +4,11 @@ import { NetworkService } from './logic/service/network/network.service';
 import { Subscription } from 'rxjs';
 import { OverviewService } from './logic/service/overview/overview.service';
 import { URL } from './logic/ref/url';
+import { DialogComponent } from './ui/component/dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, DialogComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

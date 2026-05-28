@@ -17,7 +17,6 @@ export class AccountFormComponent {
   private subs: Subscription;
   private account: AccountService;
   private router: Router;
-  public exists: boolean;
   public confPass: boolean;
 
   constructor(
@@ -27,7 +26,6 @@ export class AccountFormComponent {
     this.account = account;
     this.subs = 
       new Subscription();
-    this.exists = false;
     this.confPass = false;
     this.router = router;
     this.form = 
@@ -53,11 +51,7 @@ export class AccountFormComponent {
       const { pass, 
         confpass } = form;
       this.confPass = 
-        pass !== confpass;
-      if(this.exists) {
-        this.exists = false;
-        console.log(this.exists);
-      }    
+        pass !== confpass; 
     });
   }
 
@@ -110,8 +104,6 @@ export class AccountFormComponent {
       email, pass
       } = this.form
       .getRawValue();
-    this.exists = this.account
-      .exists(email);
     const user = new User(
       fName, lName, 
       email, pass);

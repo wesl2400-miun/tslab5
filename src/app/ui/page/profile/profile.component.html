@@ -1,8 +1,6 @@
-<main>
-  <h1>Mina sidor</h1>
-  @if(logged()) {
-    <app-dashboard></app-dashboard>
-  } @else {
-    <app-login-form></app-login-form>
-  }
-</main>
+<h1>Mina sidor</h1>
+@if(logged()) {
+  <app-dashboard></app-dashboard>
+} @else {
+  <app-login-form></app-login-form>
+}

@@ -29,9 +29,6 @@
     <input type="submit" value="Skapa konto">
 
     <ul>
-      @if(exists) {
-        <li><p>Det finns redan ett konto som är kopplat till denna e-post</p></li>
-      }
       @if(confPass) {
         <li><p>Lösnord matchar inte</p></li>
       }
