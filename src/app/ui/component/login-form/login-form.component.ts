@@ -44,7 +44,8 @@ export class LoginFormComponent {
       await this.account
         .login(email, pass);
     if(match) {
-      this.router.navigate(
+      await this.router
+        .navigate(
         ['/profile']);
     }
   }

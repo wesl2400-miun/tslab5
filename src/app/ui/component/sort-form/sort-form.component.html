@@ -1,8 +1,8 @@
-<section class="form">
+<section>
   <h2>Sortera efter</h2>
   <!-- ReactiveFormsModule skapar ett formulär, som styrs från sorter-form.ts-filen -->
   <!-- Rubrikerna och värdena anges via 'databindning' -->
-  <form class="sorter" [formGroup]="form">
+  <form [formGroup]="form">
     <div class="radio-btn">
       <input id="code" type="radio"  formControlName="sorter" [value]="sortMode.CODE">
       <label for="code">{{label.COURSE_CODE}}</label>

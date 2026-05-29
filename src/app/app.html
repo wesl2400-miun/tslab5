@@ -1,9 +1,18 @@
-<nav>
-  <ul>
-    <li><a routerLink="/home">Kurser</a></li>
-    <li><a routerLink="/profile">Mina Sidor</a></li>
-  </ul>
-</nav>
+<header class="header">
+  <div class=" logo">
+    <a routerLink="/">
+      <img fetchpriority="high" width="260" height="160"
+        src='/asset/mittlogo.svg' 
+        alt="Mittuniversitetet - Logotyp">
+    </a>
+  </div>
+  <nav class="nav">
+    <ul>
+      <li><a routerLink="/home">Kurser</a></li>
+      <li><a routerLink="/profile">Mina Sidor</a></li>
+    </ul>
+  </nav>
+</header>
 
 <main>
   <app-dialog></app-dialog>

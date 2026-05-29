@@ -1,0 +1,7 @@
+
+.topic-opts {
+  background-color: var(--secondary-variant);
+  border: 1px solid var(--on-surface);
+  height: 30px;
+  border-radius: 5px;
+}

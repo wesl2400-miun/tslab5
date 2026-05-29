@@ -1,11 +1,11 @@
 <section class="form">
   <h2>Filtrera efter</h2>
   <!-- ReactiveFormsModule skapar ett formulär, som styrs från search-form.ts-filen -->
-  <form class="filter" [formGroup]="form">
+  <form [formGroup]="form">
     <label for="phrase">Sökord</label>
-    <input id="phrase" type="text" formControlName="phrase">
+    <input id="phrase" type="text" formControlName="phrase" placeholder="Kurskod eller kursnamn">
     <label for="topic">Ämnesområde</label>
-    <select id="topic" type="text" formControlName="topic">
+    <select class="topic-opts" id="topic" type="text" formControlName="topic">
       <option value="">Alla</option>
       @for(topic of topics$ | async; track topic) {
         <option [value]="topic">{{topic}}</option>

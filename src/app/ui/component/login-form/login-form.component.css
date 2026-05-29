@@ -1,0 +1,11 @@
+
+.account-link,
+.account-link:link,
+.account-link:visited {
+  display: inline;
+  color: var(--primary);
+}
+
+.account-link:hover {
+  color: var(--primary-variant);
+}

@@ -8,8 +8,207 @@
   --on-surface: #292929;
   --on-background: #595959;
   --surface: #e0e0e0;
+  --background: white;
   --on-primary: white;
-  font-size: 16px;
-  font-family: Verdana, sans-serif;
   color: var(--on-surface);
 }
+
+:root, 
+input, 
+button, 
+select, 
+option {
+  font-size: 16px;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+html, body {
+  width: 100vw;
+}
+
+body {
+  max-width: 1920px;
+  height: 100%;
+  background: linear-gradient(rgb(255, 246, 160), rgb(255, 236, 66), rgb(85, 85, 222),rgb(41, 41, 123));
+  background-repeat: no-repeat;
+}
+
+body,
+app-root,
+app-dialog,
+app-home,
+app-dashboard,
+app-profile,
+app-overview,
+app-register,
+app-sort-form,
+app-filter-form,
+app-login-form,
+app-account-form,
+main,
+section,
+form,
+ul,
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+app-root,
+app-dialog,
+app-home,
+app-dashboard,
+app-profile,
+app-overview,
+app-register,
+app-sort-form,
+app-filter-form,
+app-login-form,
+app-account-form,
+main,
+section,
+form,
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+app-root,
+app-dialog,
+app-home,
+app-dashboard,
+app-profile,
+app-overview,
+app-register,
+app-sort-form,
+app-filter-form,
+app-login-form,
+app-account-form,
+section,
+form,
+h2,
+h3,
+p,
+ul,
+select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+html,
+app-root,
+app-dialog,
+app-home,
+app-dashboard,
+app-profile,
+app-overview,
+app-register,
+app-sort-form,
+app-filter-form,
+app-login-form,
+app-account-form {
+  justify-content: center;
+  align-items: center;
+}
+
+main,
+section,
+form {
+  align-items: start;
+}
+
+ul {
+  list-style: none;
+}
+
+h1 {
+  width: 100vw;
+  background-color: var(--primary-variant);
+  color: var(--on-primary);
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+main {
+  width: 95%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  max-width: 600px;
+}
+
+section {
+  background-color: var(--background);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--primary);
+}
+
+a {
+  display: block;
+}
+
+.courses {
+  margin-top: 2rem;
+  gap: 1.5rem;
+}
+
+.sec-btn, 
+.prim-btn,
+input[type='submit'] {
+  width: 100px;
+  margin-top: 0.7rem;
+  padding: 0.2rem;
+  border: 1px solid var(--on-surface);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.sec-btn {
+  background-color: var(--secondary);
+  margin-right: 0.3rem;
+}
+
+.prim-btn {
+  color: var(--on-primary);
+  background-color: var(--primary);
+}
+
+.sec-btn:hover {
+  background-color: var(--secondary-variant);
+}
+
+.prim-btn:hover {
+  background-color: var(--primary-variant);
+}
+
+label {
+  margin: 0.3rem 0;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password']    {
+  width: 100%;
+  height: 30px;
+  padding-left: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid var(--on-surface);
+}
+
+input[type='submit'] {
+  margin-bottom: 1rem;
+}
+

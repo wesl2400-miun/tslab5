@@ -2,7 +2,7 @@
   <h2>Kurser</h2>
   <h3>Listar {{size$ | async}} kurser av totalt {{maxSize$ | async}}</h3>
   <p>Du måste vara inloggad för att lägga till kurser.</p>
-  <ul>
+  <ul class="courses">
     @for(course of chunk$ | async; track course.courseCode) {
       <li>
         <h3>{{course.courseName}}</h3>
@@ -10,19 +10,21 @@
         <p>Progression: {{course.progression}}</p>
         <p>Poäng: {{course.points}}</p>
         <p>Ämne: {{course.subject}}</p>
-        <button (click)="changeDesc(course)">{{showBtnLab(course)}}</button>
         @if(course.showMore) {
           <p>Nivå: {{course.level}}</p>
           <p>Organisationskod: {{course.institutionCode}}</p>
           <a target="_blank" [href]="course.syllabus">Kursplan</a>
         }
+        <button class="sec-btn" (click)="changeDesc(course)">{{showBtnLab(course)}}</button>
         @if(!hideCourse(course.courseCode)) {
-          <button (click)="addCourse(course)">Lägg till</button>
+          <button class="prim-btn" (click)="addCourse(course)">Lägg till</button>
         }
       </li>
     }
   </ul>
   @if(load) {
-    <button id="load-more-btn" (click)="loadMore('load-more-btn')">Visa fler kurser</button>
+    <div class="load-more">
+      <button id="load-more-btn" (click)="loadMore('load-more-btn')">Visa fler kurser</button>
+    </div>
   }
 </section>
