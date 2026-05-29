@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AccountService } from '../../../logic/service/account/account.service';
 import { User } from '../../../logic/model/User';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account-form',
@@ -18,6 +18,8 @@ export class AccountFormComponent {
   private account: AccountService;
   private router: Router;
   public confPass: boolean;
+  private dupSbj: BehaviorSubject<boolean>;
+  public duplicate$: Observable<boolean>;
 
   constructor(
     fBuilder: FormBuilder,
@@ -26,6 +28,10 @@ export class AccountFormComponent {
     this.account = account;
     this.subs = 
       new Subscription();
+    this.dupSbj = 
+      new BehaviorSubject(false);
+    this.duplicate$ = this.dupSbj
+      .asObservable();
     this.confPass = false;
     this.router = router;
     this.form = 
@@ -96,23 +102,41 @@ export class AccountFormComponent {
       .get('pass');
   }
 
+  public onFocus = 
+    (): void => {
+    this.dupSbj
+      .next(false);
+  }
+
   public submit = 
-    async (): Promise<void> => {
+    (): void => {
     if(this.form.invalid)
       return;
     const { fName, lName, 
       email, pass
       } = this.form
       .getRawValue();
+    this.checkDup(email);
     const user = new User(
       fName, lName, 
       email, pass);
     const success = 
-      await this.account
+      this.account
         .create(user);
     if(success) {
       this.router.navigate(
         ['/profile']);
+    }
+  }
+
+  private checkDup = 
+    (email: string): void => {
+    const duplicate = 
+      this.account
+      .duplicate(email);
+    if(duplicate) {
+      this.dupSbj
+      .next(true);
     }
   }
 }

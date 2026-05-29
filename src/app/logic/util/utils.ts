@@ -63,12 +63,12 @@ export const sort = (
   return list.sort(compare);
 }
 
-export const hashPass = async (
+export const hashPass = (
   pass: string
-  ): Promise<string | null> => {
+  ): string | null => {
   try {
-    return await bcrypt
-    .hash(pass, 10);
+    return bcrypt
+    .hashSync(pass, 10);
   } catch(err: any) {
     console.error(
       err.message);
@@ -76,13 +76,14 @@ export const hashPass = async (
   }
 }
 
-export const matchHash = async (
+export const matchHash = (
   pass: string,
   hash: string
-  ): Promise<boolean> => {
+  ): boolean => {
   try {
-    return await bcrypt
-      .compare(pass, hash);
+    return bcrypt
+      .compareSync(
+        pass, hash);
   } catch(err: any) {
     console.error(
       err.message);

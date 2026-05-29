@@ -3,16 +3,22 @@
   <form [formGroup]="form" (ngSubmit)="submit()">
 
     <label for="email">E-post</label>
-    <input id="email" type="email"
+    <input (click)="onFocus()" id="email" type="email"
       formControlName="email" 
       placeholder="erik_nilsson@gmail.com"> 
 
     <label for="pass">Lösenord</label>
-    <input id="pass" type="password"
+    <input (click)="onFocus()" id="pass" type="password"
       formControlName="pass" 
-      placeholder="FakePassword0+">
+      placeholder="FakePassword0+"
+      autocomplete="off">
 
     <input class="prim-btn" type="submit" value="Logga in">
+    @if(errors$ | async) {
+      <div class="errors">
+        <p>* Fel användarnamn eller lösneord</p>
+      </div>
+    } 
   </form>
   <p>Har inget konto? <a class="account-link" routerLink="/register">Skapa konto</a></p>
 </section>

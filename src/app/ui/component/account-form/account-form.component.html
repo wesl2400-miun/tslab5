@@ -1,48 +1,52 @@
 <section>
   <h2>Dina uppgifter</h2>
   <form [formGroup]="form" (ngSubmit)="submit()">
+
     <label for="fName">Förnamn</label>
-    <input id="fName" type="text" required 
+    <input (click)="onFocus()" id="fName" type="text" required 
       formControlName="fName" 
       placeholder="Erik"> 
 
     <label for="lName">Efternamn</label>
-    <input id="lName" type="text"
+    <input (click)="onFocus()" id="lName" type="text"
       formControlName="lName" 
       placeholder="Nilsson"> 
 
     <label for="email">E-post</label>
-    <input id="email" type="email"
+    <input (click)="onFocus()" id="email" type="email"
       formControlName="email" 
       placeholder="erik_nilsson@gmail.com"> 
 
     <label for="pass">Lösenord</label>
-    <input id="pass" type="password"
+    <input (click)="onFocus()" id="pass" type="password"
       formControlName="pass" 
       placeholder="FakePassword0+">
 
     <label for="confpass">Bekräfta lösenord</label>
-    <input id="confpass" type="password"
+    <input (click)="onFocus()" id="confpass" type="password"
       formControlName="confpass" 
       placeholder="FakePassword0+"> 
 
     <input class="prim-btn" type="submit" value="Skapa konto">
 
-    <ul>
+    <ul class="errors">
+      @if(duplicate$ | async) {
+        <li><p>* Det finns redan ett konto som är kopplat till denna e-post</p></li>
+      }
       @if(confPass) {
-        <li><p>Lösnord matchar inte</p></li>
+        <li><p>* Lösnord matchar inte</p></li>
       }
       @if(fName.invalid) {
-        <li><p>Förnamn är obligatoriskt</p></li>
+        <li><p>* Förnamn är obligatoriskt</p></li>
       }
       @if(lName.invalid) {
-        <li><p>Efternamn är obligatoriskt</p></li>
+        <li><p>* Efternamn är obligatoriskt</p></li>
       }
       @if(email.invalid) {
-        <li><p>Inkorrekt e-post</p></li>
+        <li><p>* Inkorrekt e-post</p></li>
       }
       @if(pass.invalid) {
-        <li><p>Lösendord måste vara minst 8 tecken långt, innehålla minst en siffra samt ett av följande specialtecken: !@?+&%$</p></li>
+        <li><p>* Lösendord måste vara minst 8 tecken långt, innehålla minst en siffra samt ett av följande specialtecken: !@?+&%$</p></li>
       }
     </ul>
   </form>

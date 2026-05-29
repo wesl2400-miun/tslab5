@@ -10,41 +10,40 @@ export class Account {
       email) !== null;
   }
 
-  public login = async(
+  public login = (
     email: string,
     pass: string,
-    ): Promise<UserI | null> => {
+    ): UserI | null => {
     const user = 
-      this.tryLoad(
-        email);
+      this.tryLoad(email);
     const match: boolean = 
-      await matchHash(pass, 
+      matchHash(pass, 
         user?.pass || '');
     if(match) return user;
-    return null;
+    else return null;
   }
 
-  public create = async (
+  public create = (
     user: UserI
-    ): Promise<UserI | null> => {
+    ): UserI | null => {
     const { email } = user;
     const inStore = 
       this.tryLoad(
         email);
     if(inStore) 
       return null;
-    await this.trySave(user);
+    this.trySave(user);
     return user;
   }
 
-  private trySave = async (
+  private trySave = (
     user: UserI
-    ): Promise<void> => {
+    ): void => {
     try {
       const { email,
         pass } = user;
       const hash = 
-        await hashPass(pass);
+        hashPass(pass);
       if(hash) {
         user.pass = hash;
         save(email, user);

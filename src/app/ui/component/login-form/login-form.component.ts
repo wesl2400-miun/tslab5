@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../../../logic/service/account/account.service';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -16,14 +17,17 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginFormComponent {
   public form: FormGroup;
   private account: AccountService;
-  private router: Router;
+  private errsSbj: BehaviorSubject<boolean>;
+  public errors$: Observable<boolean>;
 
   constructor(
     fBuilder: FormBuilder,
-    account: AccountService,
-    router: Router) {
+    account: AccountService) {
     this.account = account;
-    this.router = router;
+    this.errsSbj = 
+      new BehaviorSubject(false);
+    this.errors$ = this.errsSbj
+      .asObservable();
     this.form = fBuilder.group({
       email: [''],
       pass: ['']
@@ -35,18 +39,20 @@ export class LoginFormComponent {
       .get('pass');
   }
 
+  public onFocus = 
+    (): void => {
+    this.errsSbj
+      .next(false);
+  }
+
   public submit = 
-    async (): Promise<void> => {
+    (): void => {
     const { email, 
-      pass } = this.form
+      pass } =  this.form
       .getRawValue();
-    const match = 
-      await this.account
-        .login(email, pass);
-    if(match) {
-      await this.router
-        .navigate(
-        ['/profile']);
-    }
+    const success = this.account
+      .login(email, pass);
+    this.errsSbj
+      .next(!success);
   }
 }
