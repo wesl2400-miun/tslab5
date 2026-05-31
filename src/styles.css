@@ -239,7 +239,7 @@ input[type='submit'] {
 }
 
 .hero {
-  background-image: url('/asset/surrealism.png');
+  background-image: url('./asset/surrealism.png');
   max-width: 600px;
   height: 400px;
   border-radius: 5px;
