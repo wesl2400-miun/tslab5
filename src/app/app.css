@@ -14,7 +14,7 @@ nav {
 .header 
 .logo, 
 .logo a,
-nav
+nav,
 nav ul li,
 nav ul li a {
   display: flex;

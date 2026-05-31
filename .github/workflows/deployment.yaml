@@ -36,7 +36,7 @@ jobs:
         run: npm ci
       - name: Build
       # Detta är fungerande Angular publiceringsinställning
-        run: npm run build -- --base-href=https://wesl2400-miun.github.io/tslab5/
+        run: npm run build --production -- --base-href=https://wesl2400-miun.github.io/tslab5/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

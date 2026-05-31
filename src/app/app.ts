@@ -27,10 +27,6 @@ export class App {
     this.subs = new Subscription();
     this.network = network;
     this.overview = overview;
-    for(let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i) || '';
-      console.log(localStorage.getItem(key))
-    }
   }
 
   public ngOnInit() {

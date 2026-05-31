@@ -1,15 +1,24 @@
 import { Component } from '@angular/core';
-import { OverviewComponent } from '../../component/overview/overview.component';
-import { FilterFormComponent } from '../../component/filter-form/filter-form.component';
-import { SortFormComponent } from '../../component/sort-form/sort-form.component';
+import { Observable } from 'rxjs';
+import { OverviewService } from '../../../logic/service/overview/overview.service';
+import { extract$ } from '../../../logic/util/utils';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [
-    FilterFormComponent, 
-    SortFormComponent, 
-    OverviewComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  public maxSize$: Observable<number>;
+
+  constructor(
+    overview: OverviewService) {
+    const { chunk$ } = overview;
+    this.maxSize$ = extract$(
+      chunk$, 'maxSize');
+  }
+  
+}
