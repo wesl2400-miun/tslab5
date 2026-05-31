@@ -157,6 +157,7 @@ main {
 }
 
 section {
+  height: auto;
   background-color: var(--background);
   padding: 1rem;
   margin-bottom: 1rem;
@@ -169,6 +170,7 @@ a {
 }
 
 .courses {
+  height: auto;
   margin-top: 2rem;
   gap: 1.5rem;
 }
@@ -240,12 +242,14 @@ input[type='submit'] {
 
 .hero {
   max-width: 600px;
+  height: auto;
   justify-content: end;
 }
 
 .hero img {
   width: 100%;
   height: auto;
+  min-width: 100px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
