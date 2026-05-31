@@ -23,6 +23,7 @@ option {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+  font-display: optional;
 }
 
 html, body {
@@ -107,6 +108,7 @@ ul,
 select,
 .hero {
   width: 100%;
+  height: auto;
   box-sizing: border-box;
 }
 
@@ -242,14 +244,12 @@ input[type='submit'] {
 
 .hero {
   max-width: 600px;
-  height: auto;
   justify-content: end;
 }
 
 .hero img {
   width: 100%;
   height: auto;
-  min-width: 100px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -268,7 +268,6 @@ input[type='submit'] {
   text-align: center;
   color: var(--on-primary);
   background-color: var(--on-surface);
-
 }
 
 
