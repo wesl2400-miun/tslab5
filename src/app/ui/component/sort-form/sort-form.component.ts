@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LabelI } from '../../../logic/interface/LabelI';
-import { Subscription } from 'rxjs';
+import { distinctUntilChanged, Subscription } from 'rxjs';
 import { SORT_MODE } from '../../../logic/ref/sortMode';
 import { LABEL } from '../../../logic/ref/label';
 import { SortModeI } from '../../../logic/interface/SortModeI';
@@ -46,6 +46,7 @@ export class SortFormComponent {
     ): Subscription => {
     return this.form.get('sorter')!
       .valueChanges
+      .pipe(distinctUntilChanged())
       .subscribe(value => {
         this.overview
           .sort(value);

@@ -42,7 +42,8 @@ export const extract$ = (
   func: boolean = false) => {
   if(func) {
     return from$.pipe(map(
-      item => item[prop]()));
+      item => item[prop]()), 
+      distinctUntilChanged());
   } else {
     return from$.pipe(map(
     item => item[prop]), 

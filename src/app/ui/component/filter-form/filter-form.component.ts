@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, map } from 'rxjs';
 import { OverviewService } from '../../../logic/service/overview/overview.service';
 import { CommonModule } from '@angular/common';
 
@@ -44,7 +44,9 @@ export class FilterFormComponent {
   private filter  = (
     ): Subscription => {
     return this.form
-      .valueChanges.subscribe(
+      .valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe(
         ({ topic, phrase }) => {
         this.overiew.filter(
           topic, phrase);
