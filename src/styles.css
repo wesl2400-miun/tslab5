@@ -60,7 +60,9 @@ h1,
 h2,
 h3,
 p,
-.errors {
+.errors,
+.dialog-err,
+.dialog-msg {
   margin: 0;
   padding: 0;
 }
@@ -85,7 +87,9 @@ section,
 form,
 ul,
 .errors,
-.hero {
+.hero,
+.dialog-err, 
+.dialog-msg  {
   display: flex;
   flex-direction: column;
 }
@@ -128,7 +132,9 @@ app-register,
 app-sort-form,
 app-filter-form,
 app-login-form,
-app-account-form {
+app-account-form,
+.dialog-err, 
+.dialog-msg  {
   justify-content: center;
   align-items: center;
 }
@@ -282,4 +288,26 @@ input[type='submit'] {
   background-color: var(--on-surface);
 }
 
+/* Stilen för popupfönstret */
 
+.dialog-err,
+.dialog-msg {
+  bottom: 20px;
+  position: fixed;
+  width: 100%;
+  max-width: 600px;
+  min-height: 100px;
+  color: var(--background);
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid var(--background);
+  border-radius: 10px 0 10px 0;
+}
+
+.dialog-err {
+  background-color: #411616;
+}
+
+.dialog-msg {
+  background-color: #16411d;
+}
