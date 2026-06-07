@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../../component/dashboard/dashboard.component';
 import { DashboardService } from '../../../logic/service/dashboard/dashboard.service';
 
+// UI-logik för Mina Sidor
 @Component({
   selector: 'app-profile',
   imports: [
@@ -21,6 +22,7 @@ export class ProfileComponent {
     this.dashboard = dashboard;
   }
 
+  // Kolla om användaren är inloggad
   public logged = 
     (): boolean => {
     return this.dashboard

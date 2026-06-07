@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { extract$ } from '../../../logic/util/utils';
 
+// UI-logik för popupfönstret
 @Component({
   selector: 'app-dialog',
   imports: [CommonModule],
@@ -26,6 +27,7 @@ export class DialogComponent {
       message$, 'cssClass');
   }
 
+  // Visa popupfönstret
   public get show
     (): boolean {
     return this.dialog

@@ -8,6 +8,7 @@ import { DIALOG } from '../../ref/dialog';
 import { Message } from '../../model/Message';
 import { CSS_CLASS } from '../../ref/cssClass';
 
+// Tjänsten för användarpanelen
 @Injectable({
   providedIn: 'root',
 })
@@ -29,6 +30,7 @@ export class DashboardService {
     this.dialog = dialog;
   }
 
+  // Uppdatera användarinfromationen
   public update = (
     user: UserI | null
     ): void => {
@@ -36,12 +38,14 @@ export class DashboardService {
       .next(user);
   }
 
+  // Returnera användardata
   private get user
     (): UserI | null {
     return this.userSbj
       .getValue();
   }
 
+  // Kolla om kursen finns i ramschemat
   public hasCourse = (
     code: string
     ): boolean => {
@@ -52,6 +56,7 @@ export class DashboardService {
         code, user);
   }
 
+  // Räkna akademiska poäng och returnera resultatet
   public points = (): number => {
     const user: UserI | null
      = this.user;
@@ -59,6 +64,7 @@ export class DashboardService {
       .points(user);
   }
 
+  // Returnera antalet kurser i ramschemat
   public total = 
     (): number => {
     const user: UserI | null
@@ -68,12 +74,14 @@ export class DashboardService {
       .length || 0;
   }
 
+  // Logga ut
   public logout = 
     (): void => {
     this.userSbj
       .next(null);
   }
 
+  // Kolla om användaren är inloggad
   public logged = 
     (): boolean => {
     const user: UserI | null
@@ -81,6 +89,7 @@ export class DashboardService {
     return user !== null;
   }
   
+  // Lägg en kurs i ramschemat
   public addCourse = (
     newCour: CourseI
     ): void => {
@@ -101,6 +110,7 @@ export class DashboardService {
     this.update(updated);
   }
 
+  // Ta bort en kurs från ramschemat
   public remCourse = (
     code: string): void => {
     const user: UserI | null

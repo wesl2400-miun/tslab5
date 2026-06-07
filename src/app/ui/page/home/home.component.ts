@@ -5,6 +5,7 @@ import { extract$ } from '../../../logic/util/utils';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+// UI-logik för landninsgsidan
 @Component({
   selector: 'app-home',
   imports: [CommonModule, RouterLink],

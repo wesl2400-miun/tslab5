@@ -5,6 +5,7 @@ import { AccountService } from '../../../logic/service/account/account.service';
 import { RouterLink } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
+// UI-logik för inloggningsformuläret
 @Component({
   selector: 'app-login-form',
   imports: [
@@ -34,17 +35,20 @@ export class LoginFormComponent {
     });
   }
 
+  // Lösenord
   public get pass(): any {
     return this.form
       .get('pass');
   }
 
+  // Nollställ felmeddekanden när fälten fokuseras
   public onFocus = 
     (): void => {
     this.errsSbj
       .next(false);
   }
 
+  // Skicka formuläret
   public submit = 
     (): void => {
     const { email, 

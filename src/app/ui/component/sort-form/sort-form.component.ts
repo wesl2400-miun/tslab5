@@ -7,6 +7,7 @@ import { LABEL } from '../../../logic/ref/label';
 import { SortModeI } from '../../../logic/interface/SortModeI';
 import { OverviewService } from '../../../logic/service/overview/overview.service';
 
+// UI-logiken för sorteringsformuläret
 @Component({
   selector: 'app-sort-form',
   imports: [ReactiveFormsModule],
@@ -33,15 +34,18 @@ export class SortFormComponent {
     this.overview = overview;
   }
 
+  // Lyssna efter ändringar i formuläret
   public ngOnInit() {
     this.subs.add(
       this.sort());
   }
 
+  // Sluta lyssna efter ändringar i formuläret
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  // Sortera kurser när uppdatering av sorteringsformuläret
   private sort = (
     ): Subscription => {
     return this.form.get('sorter')!

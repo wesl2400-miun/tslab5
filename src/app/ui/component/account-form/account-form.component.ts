@@ -6,6 +6,7 @@ import { User } from '../../../logic/model/User';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
+// UI-logik för kontoregistrering
 @Component({
   selector: 'app-account-form',
   imports: [CommonModule, ReactiveFormsModule],
@@ -39,15 +40,18 @@ export class AccountFormComponent {
         fBuilder);
   }
 
+  // Prenumera på clear() strömmen
   public ngOnInit() {
     this.subs.add(
       this.clear());
   }
 
+  // Avprenumerera alla händelseströmmar som observeras
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  // Lyssna efter uppdateringar av kontoformuläret
   private clear = 
     (): Subscription => {
     return this.form
@@ -61,6 +65,7 @@ export class AccountFormComponent {
     });
   }
 
+  // Koppla upp kontoformuläret
   private initForm = (
     fBuilder: FormBuilder
     ): FormGroup =>{
@@ -82,32 +87,38 @@ export class AccountFormComponent {
     });
   }
 
+  // Fältet för förnamn
   public get fName(): any {
     return this.form
       .get('fName');
   }
 
+  // Fältet för efternamn
   public get lName(): any {
     return this.form
       .get('lName');
   }
 
+  // Fältet för e-post
   public get email(): any {
     return this.form
       .get('email');
   }
 
+  // Fältet för lösenord
   public get pass(): any {
     return this.form
       .get('pass');
   }
 
+  // Rensa duplikat meddelandet när fälten fokuseras
   public onFocus = 
     (): void => {
     this.dupSbj
       .next(false);
   }
 
+  // Försök skapa konto när formuläret skickas
   public submit = 
     (): void => {
     if(this.form.invalid)
@@ -129,6 +140,7 @@ export class AccountFormComponent {
     }
   }
 
+  // Visa felmeddelandet om dubletterna finns
   private checkDup = 
     (email: string): void => {
     const duplicate = 

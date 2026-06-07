@@ -1,5 +1,6 @@
 import { CourseI } from "../interface/CourseI";
 
+// Bearbetar kursdata från URL:en
 export class Catalog {
   public courses: CourseI[];
   public topics: string[];
@@ -12,6 +13,7 @@ export class Catalog {
     this.topics = topics;
   }
 
+  // Extrahera ämne-listan från kursdata och ta bort dubletterna i kurslistan
   private clean = (
     courses: CourseI[]
     ): any => {
@@ -32,6 +34,7 @@ export class Catalog {
     }
   }
 
+  // Algoritm för att ta bort kursdubbletter
   private cleanItem = (
     ids: Set<string>,
     unique: CourseI[],

@@ -1,5 +1,6 @@
 import { ErrMsgI } from "../interface/ErrMsgI";
 
+// Felmeddelanden
 export const ERR_MSG: 
   Readonly<ErrMsgI> = {
   DUPLICATE: 'Kurs med samma kod finns redan i ditt ramschema',

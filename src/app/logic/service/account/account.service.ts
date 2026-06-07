@@ -3,6 +3,7 @@ import { UserI } from '../../interface/UserI';
 import { Account } from '../../model/Account';
 import { DashboardService } from '../dashboard/dashboard.service';
 
+// Tjänsten för kontoregistrering
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +19,7 @@ export class AccountService {
       dashboard;
   }
 
+  // Kolla dubbletter
   public duplicate = (
     email: string
     ): boolean => {
@@ -25,6 +27,7 @@ export class AccountService {
       .exists(email);
   }
 
+  // Logga in
   public login = (
     email: string, 
     pass: string
@@ -37,6 +40,7 @@ export class AccountService {
     return user !== null;
   }
 
+  // Skapa konto
   public create = (
     newUser: UserI
     ): boolean => {

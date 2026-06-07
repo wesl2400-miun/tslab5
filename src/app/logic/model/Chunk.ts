@@ -2,6 +2,7 @@ import { CourseI } from "../interface/CourseI";
 import { CONSTANT } from "../ref/constant";
 import { Effects } from "./Effects";
 
+// Hanterar ett avsnitt av kurslistan som laddas upp med 'ladda mer'-knappen
 export class Chunk {
   public maxSize: number;
   private copy: CourseI[];
@@ -15,6 +16,7 @@ export class Chunk {
     this.effs = null;
   }
 
+  // Applicerar effekter på ett avsnitt av kurslistan
   public chunk = 
     (): CourseI[] => { 
     return this.effs!
@@ -22,12 +24,14 @@ export class Chunk {
       .slice(0, this.size);
   }
 
+  // Returnera den nuvarande längden på avsnittet av kurslistan
   public getSize = 
     (): number => {
     return this.chunk()
       .length;
   }
 
+  // Initiera data som är nödvänding för att förbereda ett aktuellt avsnitt av kurslistan
   public init = (
     courses: CourseI[]
     ): void => {
@@ -39,18 +43,21 @@ export class Chunk {
     this.effs = new Effects();
   }
 
+  // Nollställ avsnittlängden och alla nödvändiga värden
   public restore = () => {
     this.size = 
       CONSTANT.CHUNK_LEN;
     this.init(this.copy);
   }
 
+  // Kolla om mer kurser kan laddas
   public load = 
     (): boolean =>{
     return this.size 
       < this.maxSize;
   }
 
+  // Expandera kursavsnittet
   public expand = (): void => {
     const size = this.size +
       CONSTANT.CHUNK_LEN;
@@ -61,6 +68,7 @@ export class Chunk {
     }
   }
 
+  // Sortera kursavsnittet
   public sort = (
     sortMode: string
   ): void => {
@@ -70,6 +78,7 @@ export class Chunk {
       CONSTANT.CHUNK_LEN;
   }
 
+  // Filtrera kursavsnittet
   public filter = (
     topic: string, 
     phrase: string

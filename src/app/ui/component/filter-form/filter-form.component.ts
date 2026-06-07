@@ -5,6 +5,7 @@ import { Observable, Subscription, distinctUntilChanged, map } from 'rxjs';
 import { OverviewService } from '../../../logic/service/overview/overview.service';
 import { CommonModule } from '@angular/common';
 
+// UI-logiken bakom filtreringsfunktionaliteten
 @Component({
   selector: 'app-filter-form',
   imports: [ReactiveFormsModule, CommonModule],
@@ -32,15 +33,18 @@ export class FilterFormComponent {
     this.topics$ = topics$;
   }
 
+  // Lyssna efter ändringar i filterformuläret
   public ngOnInit() {
     this.subs.add(
       this.filter());
   }
 
+  // sluta lyssna efter ändringar i filterformuläret
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  // Filtrera kurslistan när filtrering appliceras
   private filter  = (
     ): Subscription => {
     return this.form

@@ -6,6 +6,7 @@ import { CourseI } from '../../../logic/interface/CourseI';
 import { extract$, node } from '../../../logic/util/utils';
 import { DashboardService } from '../../../logic/service/dashboard/dashboard.service';
 
+// UI-logiken för kurslistan
 @Component({
   selector: 'app-overview',
   imports: [CommonModule],
@@ -36,6 +37,7 @@ export class OverviewComponent {
     this.load = true;
   }
 
+  // Hindra kursen från att läggas i ramschemat
   public hideCourse = 
     (code: string): boolean => {
     return this.dashboard
@@ -43,6 +45,7 @@ export class OverviewComponent {
       || !this.dashboard.logged();
   }
 
+  // Lägg till kursen till ramschemat
   public addCourse = (
     course: CourseI
     ): void => {
@@ -50,12 +53,14 @@ export class OverviewComponent {
       .addCourse(course);
   }
 
+  // Ändra kursbeskrivningen
   public changeDesc = (
     course: CourseI): void => {
     course.showMore = 
       !course.showMore;
   }
 
+  // Visa respektive dölj den långa beskrviningen av en kurs
   public showBtnLab = 
     (course: CourseI): string => {
     return course.showMore
@@ -63,6 +68,7 @@ export class OverviewComponent {
       : 'Visa mer';
   }
 
+  // Ladda mer kurser
   public loadMore = 
     (viewId: string) => {
     this.load = 

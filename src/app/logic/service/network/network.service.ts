@@ -6,6 +6,7 @@ import { DIALOG } from '../../ref/dialog';
 import { Message } from '../../model/Message';
 import { CSS_CLASS } from '../../ref/cssClass';
 
+// Tjänsten för nätverksoperationer
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +21,7 @@ export class NetworkService {
     this.dialog = dialog;
   }
 
+  // Koppla till den angivna URL:en via httpClient och hämta data
   public connect = (
     url: string, onConnect: 
     (data: any) => void
@@ -33,6 +35,7 @@ export class NetworkService {
       });
   }
 
+  // Kör detta vid fel
   private onError = (
     err: any) => {
     console.error(

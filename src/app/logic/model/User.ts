@@ -1,6 +1,7 @@
 import { CourseI } from "../interface/CourseI";
 import { UserI } from "../interface/UserI";
 
+// Modellkassen för användare
 export class User 
   implements UserI {
 

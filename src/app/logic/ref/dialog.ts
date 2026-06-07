@@ -1,5 +1,6 @@
 import { DialogI } from "../interface/DialogI";
 
+// Popup-meddelanden
 export const DIALOG: Readonly<DialogI> = {
   COURSES_FAIL: 'Det gick inte att hämta kurser',
   ADD_CRS_FAIL: 'Det gick inte att lägga till kursen',

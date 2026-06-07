@@ -1,4 +1,5 @@
 
+// Strukturen för felmeddelanen
 export interface ErrMsgI {
   DUPLICATE: string,
   SAVE_FAIL: string,

@@ -1,5 +1,4 @@
 /* Stillmallen gäller hela appen */
-
 :root {
   --primary: #3751A0;
   --primary-variant: #283976;
@@ -13,6 +12,7 @@
   color: var(--on-surface);
 }
 
+/* Applicera följande typpsnitt */
 :root, 
 input, 
 button, 
@@ -30,6 +30,7 @@ html, body {
   width: 100vw;
 }
 
+/* Gäller enbart body-taggen */
 body {
   max-width: 1920px;
   height: 100%;
@@ -37,6 +38,7 @@ body {
   background-repeat: no-repeat;
 }
 
+/* Ta bort marginaler från följande behållare */
 body,
 app-root,
 app-dialog,
@@ -63,6 +65,7 @@ p,
   padding: 0;
 }
 
+/* Gör följande behållare flexibla */
 html,
 body,
 app-root,
@@ -112,6 +115,7 @@ select,
   box-sizing: border-box;
 }
 
+/* Centrera innehållet i följande behållare */
 html,
 app-root,
 app-dialog,
@@ -140,6 +144,7 @@ ul {
   list-style: none;
 }
 
+/* H1 rubrik */
 h1 {
   width: 100vw;
   background-color: var(--primary-variant);
@@ -151,6 +156,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
+/* Huvudinnehåll */
 main {
   width: 95%;
   min-height: 100vh;
@@ -171,12 +177,14 @@ a {
   display: block;
 }
 
+/* Kurslistan */
 .courses {
   height: auto;
   margin-top: 2rem;
   gap: 1.5rem;
 }
 
+/* Stilmallenf för knappar */
 .sec-btn, 
 .prim-btn,
 input[type='submit'] {
@@ -210,6 +218,7 @@ label {
   margin: 0.3rem 0;
 }
 
+/* Stillmallen för formulärfält */
 input[type='text'],
 input[type='email'],
 input[type='password']    {
@@ -225,12 +234,14 @@ input[type='submit'] {
   margin-bottom: 1rem;
 }
 
+/* Stillmallen för felmeddelanden */
 .errors {
   color: rgb(128, 19, 19);
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
+/* Skapa-konto-länken */
 .account-link,
 .account-link:link,
 .account-link:visited {
@@ -242,6 +253,7 @@ input[type='submit'] {
   color: var(--primary-variant);
 }
 
+/* Hero-bilden */
 .hero {
   max-width: 600px;
   justify-content: end;

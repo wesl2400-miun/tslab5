@@ -3,6 +3,7 @@ import { OverviewComponent } from '../../component/overview/overview.component';
 import { FilterFormComponent } from '../../component/filter-form/filter-form.component';
 import { SortFormComponent } from '../../component/sort-form/sort-form.component';
 
+// UI-logik för den kombinerade kursvy som omfattar sorterings och filtrerings formulär samt kurslistan
 @Component({
   selector: 'app-courses',
   imports: [

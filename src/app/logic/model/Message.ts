@@ -1,6 +1,7 @@
 import { MessageI } from "../interface/MessageI";
 import { CSS_CLASS } from "../ref/cssClass";
 
+// Modellklassen för popup-meddelanden
 export class Message 
   implements MessageI {
   

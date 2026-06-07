@@ -1,7 +1,6 @@
+<!-- Formuläret för sorteringsfunktionen -->
 <section>
   <h2>Sortera efter</h2>
-  <!-- ReactiveFormsModule skapar ett formulär, som styrs från sorter-form.ts-filen -->
-  <!-- Rubrikerna och värdena anges via 'databindning' -->
   <form [formGroup]="form">
     <div class="radio-btn">
       <input id="code" type="radio"  formControlName="sorter" [value]="sortMode.CODE">

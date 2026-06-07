@@ -2,6 +2,7 @@ import { CourseI } from "../interface/CourseI";
 import { SORT_MODE } from "../ref/sortMode";
 import { hasPhrase, sort } from "../util/utils";
 
+// Hanterar filterings och sorteringseffekter
 export class Effects {
 
   private phrase: string;
@@ -15,21 +16,25 @@ export class Effects {
       SORT_MODE.CODE;
   }
 
+  // Sätt på frasfiltrering
   public phraseOn = (
     phrase: string): void => {
     this.phrase = phrase;
   }
 
+  // Sätt på ämnefiltrering
   public topicOn = (
     topic: string): void => {
     this.topic = topic;
   }
 
+  // Sätt på sortering
   public sortOn = (
     sortMode: string) => {
     this.sortMode = sortMode;
   }
   
+  // Applicera effekterna på den angivna kurslistan
   public applyTo = (
     courses: CourseI[]
     ): CourseI[] => {
@@ -43,6 +48,7 @@ export class Effects {
     return sorted;
   }
 
+  // Låt effekterna påverka den agivna kursen
   private affect = (
     course: CourseI,
     copy: CourseI[],

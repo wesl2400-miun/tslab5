@@ -1,5 +1,5 @@
 
-// Definierar strukturen för sorteringsdata
+// Strukturen för sorteringsdata
 export interface SortModeI {
   CODE: string,
   NAME: string,

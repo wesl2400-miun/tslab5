@@ -1,4 +1,5 @@
 
+// Strukturen fär popup-meddelanden
 export interface DialogI {
   COURSES_FAIL: string,
   ADD_CRS_FAIL: string,

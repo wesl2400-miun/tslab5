@@ -1,12 +1,14 @@
 import { Observable, map, distinctUntilChanged } from "rxjs";
 import bcrypt from "bcryptjs";
 
+// Hämta ett HTML-element via referens
 export const node = (
   nodeId: string): HTMLElement => {
   return document
     .getElementById(nodeId)!;
 }
 
+// Spara data i localStorage
 export const save = (
   key: string, 
   data: any): void => {
@@ -16,6 +18,7 @@ export const save = (
     key, json);
 }
 
+// Ladda data från localStorage
 export const load = (
   key: string): any => {
   const json = localStorage
@@ -36,6 +39,7 @@ export const hasPhrase = (
     keyword);
 }
 
+// Skapa ett Observer-objekt från det angivna Observer-objektets specifika datafält
 export const extract$ = (
   from$: Observable<any>,
   prop: string,
@@ -51,6 +55,7 @@ export const extract$ = (
   }
 }
 
+// Sortera efter ett objektfält av den angivna listan
 export const sort = (
   prop: string, list: any) => {
   const compare = 
@@ -64,6 +69,7 @@ export const sort = (
   return list.sort(compare);
 }
 
+// Kryptera lösenordet
 export const hashPass = (
   pass: string
   ): string | null => {
@@ -77,6 +83,7 @@ export const hashPass = (
   }
 }
 
+// Kolla om det angivna lösenordet matchar det krypterade lösenordet
 export const matchHash = (
   pass: string,
   hash: string

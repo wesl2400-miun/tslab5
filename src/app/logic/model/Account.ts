@@ -1,8 +1,10 @@
 import { UserI } from "../interface/UserI";
 import { hashPass, load, matchHash, save } from "../util/utils";
 
+// Hanterar konto-logik
 export class Account {
 
+  // Kolla om en dubblett finns
   public exists = (
     email: string
     ): boolean => {
@@ -10,6 +12,7 @@ export class Account {
       email) !== null;
   }
 
+  // Returnera null eller användadata vid inloggning
   public login = (
     email: string,
     pass: string,
@@ -23,6 +26,7 @@ export class Account {
     else return null;
   }
 
+  // skapa konto
   public create = (
     user: UserI
     ): UserI | null => {
@@ -36,6 +40,7 @@ export class Account {
     return user;
   }
 
+  // Försök spara kontot i localStorage
   private trySave = (
     user: UserI
     ): void => {
@@ -54,6 +59,7 @@ export class Account {
     }
   }
 
+  // Försök ladda kontot från localStorage
   private tryLoad = (
     email: string
     ): UserI | null => {

@@ -1,4 +1,4 @@
-
+/* Stilen för alternativ i select-taggen för ämnen */
 .topic-opts {
   background-color: var(--secondary-variant);
   border: 1px solid var(--on-surface);

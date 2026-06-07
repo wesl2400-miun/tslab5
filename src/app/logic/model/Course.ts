@@ -1,5 +1,6 @@
 import { CourseI } from "../interface/CourseI";
 
+// Modellklass för kurser
 export class Course 
   implements CourseI {
 

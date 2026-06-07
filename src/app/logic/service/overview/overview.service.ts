@@ -4,6 +4,7 @@ import { CourseI } from '../../interface/CourseI';
 import { Catalog } from '../../model/Catalog';
 import { Chunk } from '../../model/Chunk';
 
+// Tjänsten för kurslistan
 @Injectable({
   providedIn: 'root',
 })
@@ -30,6 +31,7 @@ export class OverviewService {
         .asObservable();
   }
 
+  // Cacha kurslistan och skapa ett kursavsnitt baserad på den
   public cache = (
     data: CourseI[]): void => {
     const catalog = 
@@ -46,6 +48,7 @@ export class OverviewService {
       .next(topics);
   }
 
+  // Sortera kurslistan
   public sort = (
     sortMode: string): void => {
     const chunk = 
@@ -56,6 +59,7 @@ export class OverviewService {
       .next(chunk);
   }
 
+  // Filtrera kurslistan
   public filter = (
     topic: string, 
     phrase: string): void => {
@@ -68,6 +72,7 @@ export class OverviewService {
       .next(chunk);
   }
 
+  // Expandera kursabvsnittet (Detta är ladda-mer-funktionen)
   public expand = 
     (): boolean => {
     const chunk = 
@@ -79,6 +84,7 @@ export class OverviewService {
     return chunk.load();
   }
 
+  // När rutten ändras nollställ kursavsnittet
   public onRoute = 
     (): void => {
     const chunk = 

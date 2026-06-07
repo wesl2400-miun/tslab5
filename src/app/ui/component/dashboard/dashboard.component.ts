@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserI } from '../../../logic/interface/UserI';
 import { User } from '../../../logic/model/User';
 
+// UI-logiken för användarpanelen
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule],
@@ -28,15 +29,18 @@ export class DashboardComponent {
     this.user = new User();
   }
 
+  // Lyssna efter ändringar i användardatan
   public ngOnInit() {
     this.subs.add(
       this.getUser());
   }
 
+  // Sluta lyssna efter ändringar i användardatan
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  // Hämta anävndardata
   private getUser = 
     (): Subscription => {
     return this.dashboard.user$
@@ -45,17 +49,20 @@ export class DashboardComponent {
     });
   }
 
+  // Totalt antal kurser i ramschemat
   public get total() {
     return this.dashboard
       .total();
   }
 
+  // Totalt antal akademiska poäng
   public get points
     (): number {
     return this.dashboard
       .points();
   }
 
+  // Ta bort en kurs
   public remCourse = (
     code: string
     ): void => {
@@ -63,6 +70,7 @@ export class DashboardComponent {
       .remCourse(code);
   }
 
+  // Logga ut
   public logout = 
     (): void => {
     this.dashboard

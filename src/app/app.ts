@@ -29,6 +29,7 @@ export class App {
     this.overview = overview;
   }
 
+  // Lyssna efter datauppdateringar som kommer från kursurl:en 
   public ngOnInit() {
     this.subs.add(this.network
       .connect(URL.COURSES,
@@ -36,10 +37,12 @@ export class App {
     this.subs.add(this.onRoute());
   }
 
+  // Sluta lyssna efter datauppdateringar från kursurl:en
   public ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
+  // Nollställ kursavsnittet när rutterna ändras
   private onRoute = 
     (): Subscription => {
     return this.router

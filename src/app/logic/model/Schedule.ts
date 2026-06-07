@@ -2,14 +2,17 @@ import { CourseI } from "../interface/CourseI";
 import { UserI } from "../interface/UserI";
 import { load, save } from "../util/utils";
 
+// Hanterar logiken bakom ramschemat
 export class Schedule {
 
+  // Ladda upp användarkontot
   public upload = (
     email: string
     ): UserI | null => {
     return this.tryLoad(email);
   }
 
+  // Kolla om kursen finns redan i ramschemat
   public hasCourse = (
     code: string,
     user: UserI | null
@@ -19,6 +22,7 @@ export class Schedule {
         === code) as boolean;
   }
 
+  // Räkna antalet akademiska poäng
   public points = (
     user: UserI | null
     ): number => {
@@ -30,6 +34,7 @@ export class Schedule {
     return sum;
   }
 
+  // Lägg till kursen
   public add = (
     newCour: CourseI,
     user: UserI | null
@@ -45,6 +50,7 @@ export class Schedule {
     return user;
   }
 
+  // Ta bort kursen
   public remove = (
     code: string,
     user: UserI | null
@@ -63,6 +69,7 @@ export class Schedule {
     return user;
   }
 
+  // Försök spara kursen i localStorage
   private trySave = (
     email: string,
     user: UserI) => {
@@ -74,6 +81,7 @@ export class Schedule {
     }
   }
   
+  // Försök ladda upp kursen från localStorage
   private tryLoad = (
     email: string
     ): UserI | null => {

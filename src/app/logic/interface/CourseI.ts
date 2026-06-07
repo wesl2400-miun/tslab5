@@ -1,4 +1,5 @@
 
+// Strukturen för kursdata
 export interface CourseI {
   courseCode: string,
   subjectCode: string,

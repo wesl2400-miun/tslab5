@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../../model/Message';
 
+// Tjänsten för popup-fönster
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +18,7 @@ export class DialogService {
       .asObservable();
   }
 
+  // Ändra popup-meddelandet
   private setMsg = (
     message: Message
     ): void => {
@@ -24,6 +26,7 @@ export class DialogService {
       .next(message);
   }
 
+  // Uppdatera popupmeddelandet och sen nollställ det efter några sekunder för att skapa popupeffekten
   public update = (
     message: Message) => {
     this.setMsg(message);
@@ -33,6 +36,7 @@ export class DialogService {
     }, 4000);
   }
 
+  // Visa popupmeddelandet
   public show = 
     (): boolean => {
     const msg = 
