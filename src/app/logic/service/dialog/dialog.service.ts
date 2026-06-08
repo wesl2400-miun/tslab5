@@ -33,7 +33,7 @@ export class DialogService {
     setTimeout(() => {
       this.setMsg(
         new Message());
-    }, 4000);
+    }, 3000);
   }
 
   // Visa popupmeddelandet
